@@ -12,7 +12,7 @@ class LogIn extends Component {
           <Card.Body>
             <Card.Title>Sign In</Card.Title>
             <Dropdown>
-              <Dropdown.Toggle variant="light" id="dropdown-basic" style={{border: 'gray'}}>
+              <Dropdown.Toggle variant="light" id="dropdown-basic" style={{border: 'solid lightgray'}}>
                 Select User
               </Dropdown.Toggle>
 
