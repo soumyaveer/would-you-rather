@@ -1,7 +1,32 @@
 import React, { Component } from 'react'
 import { Button, Card, Dropdown } from "react-bootstrap";
+import {getUsers} from "../store/DATA"
 
 class LogIn extends Component {
+  state = {
+    users: []
+  }
+
+  updateState = (response) => {
+    this.setState({
+      users: [
+        ...this.state.users,
+        response
+      ]
+    }, () => {
+
+      this.state.users.map((user) => {
+        console.log(user)
+      })
+    })
+  }
+
+
+  componentDidMount() {
+    getUsers()
+      .then(resp => this.updateState(resp))
+  }
+
   render() {
     return (
         <Card bg="light">
@@ -17,9 +42,9 @@ class LogIn extends Component {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Soumya</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Sam</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Akshay</Dropdown.Item>
+                {
+                  <Dropdown.Item href="#/action-1">Soumya</Dropdown.Item>
+                }
               </Dropdown.Menu>
               <br/>
               <br/>
