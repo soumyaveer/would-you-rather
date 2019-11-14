@@ -3,13 +3,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import NavBar from "./components/NavBar";
 import LogIn from "./components/LogIn";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <BrowserRouter className="App">
       <NavBar/>
-      <LogIn />
-    </div>
+      <Switch>
+        <Route exact path='/' component={LogIn}/>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
