@@ -4,11 +4,13 @@ import { Navbar, Nav } from "react-bootstrap";
 class NavBar extends Component {
 
   render() {
+    const { currentUser } = this.props;
+
     return (
-      <Navbar bg="light" expand="lg" >
+      <Navbar bg="light" expand="lg">
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-sm-auto">
-            <Nav.Link href="/home"> Home </Nav.Link>
+            <Nav.Link href={`${currentUser.id}/dashboard`}> Home </Nav.Link>
             <Nav.Link href="/create_question">New Question</Nav.Link>
             <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
           </Nav>

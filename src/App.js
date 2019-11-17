@@ -9,7 +9,10 @@ import { getUsers } from "./store/DATA";
 
 class App extends Component {
   state = {
-    currentUser: {},
+    currentUser: {
+      name: '',
+      id: ''
+    },
     users: [],
     userLoggedIn: false
   };
@@ -48,15 +51,15 @@ class App extends Component {
 
 
   render() {
-    const {userLoggedIn, users} = this.state;
+    const {userLoggedIn, users, currentUser} = this.state;
     console.log(userLoggedIn)
     return (
       <div>
-        <NavBar/>
+        <NavBar currentUser={currentUser}/>
         <BrowserRouter className="App">
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route exact path={`#{this.state.currentUser}/dashboard`} component={() => <Home />}/>
+            <Route exact path={`${currentUser.id}/dashboard`} component={() => <Home />}/>
           </Switch>
         </BrowserRouter>
       </div>
