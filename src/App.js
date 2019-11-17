@@ -17,7 +17,7 @@ class App extends Component {
     userLoggedIn: false
   };
 
-  updatecurrentUserState = (newState) => {
+  updateCurrentUserState = (newState) => {
     this.setState({
       currentUser: newState,
       userLoggedIn: !this.state.userLoggedIn
@@ -26,13 +26,13 @@ class App extends Component {
 
   handleLogIn = (values) => {
     console.log('Raising the state up', values)
-    this.updatecurrentUserState(values)
+    this.updateCurrentUserState(values)
   }
 
   updateUsersState = (users) => {
     this.setState({
       users: users
-    })
+    }, () => console.log(this.state.users))
   }
 
   filterUsers = (response) => {
@@ -41,7 +41,7 @@ class App extends Component {
       users.push(response[user])
     }
     return users
-  }
+  };
 
   componentDidMount() {
     getUsers()
@@ -55,7 +55,7 @@ class App extends Component {
     console.log(userLoggedIn)
     return (
       <div>
-        <NavBar currentUser={currentUser}/>
+        <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn}/>
         <BrowserRouter className="App">
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
