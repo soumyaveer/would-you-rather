@@ -19,3 +19,6 @@ class NavBar extends Component {
 }
 
 export default NavBar;
+
+// If window.current_user is true , user is logged in. -> Allow redirect to NewQuestions and LeaderBorad
+// Otherwise redirect to Sign up page.
