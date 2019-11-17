@@ -5,9 +5,9 @@ class NavBar extends Component {
 
   render() {
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" >
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
+          <Nav className="mr-sm-auto">
             <Nav.Link href="/"> Home </Nav.Link>
             <Nav.Link href="/create_question">New Question</Nav.Link>
             <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
