@@ -18,7 +18,7 @@ class NavBar extends Component {
             <Nav.Link href="/create_question">New Question</Nav.Link>
             <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
             {
-              userLoggedIn && <Nav.Link inactive >Hello, {currentUser.name}</Nav.Link>
+              userLoggedIn && <Nav.Link inactive='true' >Hello, {currentUser.name}</Nav.Link>
             }
             {
               userLoggedIn && <Button variant="light" onClick={this.handleLogoutClick}>Log Out</Button>

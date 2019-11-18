@@ -59,7 +59,7 @@ class App extends Component {
         <BrowserRouter className="App">
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route exact path={`${currentUser.id}/dashboard`} component={() => <Home />}/>
+            <Route exact path={`/${currentUser.id}/dashboard`} component={() => <Home currentUser={currentUser} users={users}/>}/>
           </Switch>
         </BrowserRouter>
       </div>
