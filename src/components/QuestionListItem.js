@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 
 class QuestionListItem extends Component {
 
@@ -14,11 +16,16 @@ class QuestionListItem extends Component {
 
           <Card.Body>
             <h3>Would you rather...</h3>
-            {question.optionOne.text}
-            <br/>
+            <p>{question.optionOne.text}</p>
             OR
-            <br/>
-            {question.optionTwo.text}
+            <p>{question.optionTwo.text}</p>
+
+            <Link
+              to={`#`}
+              className='btn btn-outline-info'
+            >
+              View Poll
+            </Link>
           </Card.Body>
         </Card>
       </div>
