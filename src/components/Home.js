@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getQuestions } from "../store/DATA";
-
+import { Card, Accordion } from "react-bootstrap";
 
 class Home extends Component {
   state = {
@@ -14,11 +14,11 @@ class Home extends Component {
   updateAnsweredQuestionsState = () => {
     const user = this.filterCurrentUserData()
     const answeredQuestions = user.answers
-   this.setState({
-     user:{
-       answeredQuestions: [answeredQuestions]
-     }
-   })
+    this.setState({
+      user: {
+        answeredQuestions: [answeredQuestions]
+      }
+    })
   }
 
   filterUnansweredQuestions = (questions) => {
@@ -27,8 +27,8 @@ class Home extends Component {
     console.log(user.answers)
     let unAnsweredQuestions = [];
 
-    for(const answerId in user.answers){
-      for(const questionId in questions){
+    for (const answerId in user.answers) {
+      for (const questionId in questions) {
         answerId !== questionId && unAnsweredQuestions.push(questionId)
       }
     }
@@ -48,7 +48,7 @@ class Home extends Component {
   }
 
   filterCurrentUserData = () => {
-    const {users, currentUser} = this.props
+    const { users, currentUser } = this.props
     const userDetails = users.filter(user =>
       user.id === currentUser.id
     )
@@ -72,26 +72,69 @@ class Home extends Component {
       })
   }
 
-  render(){
+  render() {
     console.log("Props to home", this.props)
     // console.log(this.state.user.unansweredQuestions)
-    return(
-      <div>
-        <ul>
-          {
-            this.state.questions.map(question => (
-              <li>
-                Would you rather....
-                <br/>
-                {question.optionOne.text}
-                <br/>
-                OR
-                <br/>
-                {question.optionTwo.text}
-              </li>
-            ))
-          }
-        </ul>
+    return (
+      <div className='well text-center'>
+        <Accordion defaultActiveKey="0">
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="0">
+              Unanswered Questions
+            </Accordion.Toggle>
+            <Accordion.Toggle as={Card.Header} eventKey="1">
+              Answered Questions
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <Card.Body>
+                <ul>
+                  {
+                    this.state.questions.map(question => (
+                      <Card bg="light" className="text-center">
+                        <Card.Header>
+                          <h3>{question.author} asks</h3>
+                        </Card.Header>
+
+                        <Card.Body>
+                          <h3>Would you rather...</h3>
+                          {question.optionOne.text}
+                          <br/>
+                          OR
+                          <br/>
+                          {question.optionTwo.text}
+                        </Card.Body>
+                      </Card>
+                    ))
+                  }
+                </ul>
+              </Card.Body>
+            </Accordion.Collapse>
+            <Accordion.Collapse eventKey="1">
+              <Card.Body>
+                <ul>
+                  {
+                    this.state.questions.map(question => (
+                      <Card bg="light" className="text-center">
+                        <Card.Header>
+                          <h3>{question.author} asks</h3>
+                        </Card.Header>
+
+                        <Card.Body>
+                          <h3>Would you rather...</h3>
+                          {question.optionOne.text}
+                          <br/>
+                          OR
+                          <br/>
+                          {question.optionTwo.text}
+                        </Card.Body>
+                      </Card>
+                    ))
+                  }
+                </ul>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
       </div>
     )
   }
