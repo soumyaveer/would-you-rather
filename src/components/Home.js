@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getQuestions } from "../store/DATA";
-import { Card, Accordion } from "react-bootstrap";
+import QuestionsList from "./QuestionsList";
 
 class Home extends Component {
   state = {
@@ -80,66 +80,13 @@ class Home extends Component {
 
   render() {
     console.log("Props to home", this.props)
-    // console.log(this.state.user.unansweredQuestions)
+    const {unansweredQuestions, answeredQuestions} = this.state.user
     return (
-      <div className='well text-center'>
-        <Accordion defaultActiveKey="0">
-          <Card>
-            <span>
-            <Accordion.Toggle as={Card.Header} eventKey="0">
-              Unanswered Questions
-            </Accordion.Toggle>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
-              Answered Questions
-            </Accordion.Toggle>
-            </span>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                {
-                  this.state.user.unansweredQuestions.map((question, id) => (
-                    <Card bg="light" className="text-center" key={id}>
-                      <Card.Header>
-                        <h3>{question.author} asks</h3>
-                      </Card.Header>
-
-                      <Card.Body>
-                        <h3>Would you rather...</h3>
-                        {question.optionOne.text}
-                        <br/>
-                        OR
-                        <br/>
-                        {question.optionTwo.text}
-                      </Card.Body>
-                    </Card>
-                  ))
-                }
-              </Card.Body>
-            </Accordion.Collapse>
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>
-                  {
-                    this.state.user.answeredQuestions.map((question, id) => (
-                      <Card bg="light" className="text-center" key={id}>
-                        <Card.Header>
-                          <h3>{question.author} asks</h3>
-                        </Card.Header>
-
-                        <Card.Body>
-                          <h3>Would you rather...</h3>
-                          {question.optionOne.text}
-                          <br/>
-                          OR
-                          <br/>
-                          {question.optionTwo.text}
-                        </Card.Body>
-                      </Card>
-                    ))
-                  }
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
-      </div>
+      <QuestionsList
+        className='well text-center'
+        unansweredQuestions={unansweredQuestions}
+        answeredQuestions={answeredQuestions}
+      />
     )
   }
 }
