@@ -4,21 +4,23 @@ import { Card, Accordion } from "react-bootstrap";
 
 class Home extends Component {
   state = {
-    questions: []
-    // user: {
-    //   answeredQuestions: [],
-    //   unansweredQuestions: []
-    // }
+    user: {
+      answeredQuestions: [],
+      unansweredQuestions: []
+    }
   };
 
-  updateAnsweredQuestionsState = () => {
+  filterAnsweredQuestions = (questions) => {
     const user = this.filterCurrentUserData()
-    const answeredQuestions = user.answers
-    this.setState({
-      user: {
-        answeredQuestions: [answeredQuestions]
-      }
-    })
+    let answeredQuestions = []
+    for (const answerId in user.answers) {
+      questions.map(question =>
+        answerId === question.id && answeredQuestions.push(question)
+      )
+    }
+
+    console.log(answeredQuestions)
+    return answeredQuestions
   }
 
   filterUnansweredQuestions = (questions) => {
@@ -28,23 +30,14 @@ class Home extends Component {
     let unAnsweredQuestions = [];
 
     for (const answerId in user.answers) {
-      for (const questionId in questions) {
-        answerId !== questionId && unAnsweredQuestions.push(questionId)
-      }
+      questions.map(question =>
+        answerId !== question.id && unAnsweredQuestions.push(question)
+      )
     }
 
 
     console.log("These questions are not answered", unAnsweredQuestions)
     return unAnsweredQuestions;
-  }
-
-  updateUnsAnsweredQuestionsState = (questions) => {
-    const unansweredQuestions = this.filterUnansweredQuestions(questions)
-    this.setState({
-      user: {
-        unansweredQuestions: unansweredQuestions
-      }
-    })
   }
 
   filterCurrentUserData = () => {
@@ -56,20 +49,33 @@ class Home extends Component {
     return userDetails[0]
   }
 
-  updateState = (response) => {
+  extractQuestions = (response) => {
+    return Object.values(response)
+  }
+
+  updateState = (questions) => {
+    let answeredQuestions = this.filterAnsweredQuestions(questions)
+    let unansweredQuestions = this.filterUnansweredQuestions(questions)
+    console.log("Answered", answeredQuestions)
+    console.log("UnAnswered", unansweredQuestions)
     this.setState({
-      questions: Object.values(response)
+      user: {
+        answeredQuestions: answeredQuestions,
+        unansweredQuestions: unansweredQuestions
+      }
     }, () => {
-      console.log("whar is the state here", this.state)
+      console.log("what is the state here", this.state)
     })
   }
 
   componentDidMount() {
     getQuestions()
       .then(response => {
-        console.log(Object.values(response));
-        this.updateState(response)
+        console.log(response)
+        return this.extractQuestions(response)
       })
+      .then(questions => this.updateState(questions))
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -79,42 +85,41 @@ class Home extends Component {
       <div className='well text-center'>
         <Accordion defaultActiveKey="0">
           <Card>
+            <span>
             <Accordion.Toggle as={Card.Header} eventKey="0">
               Unanswered Questions
             </Accordion.Toggle>
             <Accordion.Toggle as={Card.Header} eventKey="1">
               Answered Questions
             </Accordion.Toggle>
+            </span>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                <ul>
-                  {
-                    this.state.questions.map(question => (
-                      <Card bg="light" className="text-center">
-                        <Card.Header>
-                          <h3>{question.author} asks</h3>
-                        </Card.Header>
+                {
+                  this.state.user.unansweredQuestions.map((question, id) => (
+                    <Card bg="light" className="text-center" key={id}>
+                      <Card.Header>
+                        <h3>{question.author} asks</h3>
+                      </Card.Header>
 
-                        <Card.Body>
-                          <h3>Would you rather...</h3>
-                          {question.optionOne.text}
-                          <br/>
-                          OR
-                          <br/>
-                          {question.optionTwo.text}
-                        </Card.Body>
-                      </Card>
-                    ))
-                  }
-                </ul>
+                      <Card.Body>
+                        <h3>Would you rather...</h3>
+                        {question.optionOne.text}
+                        <br/>
+                        OR
+                        <br/>
+                        {question.optionTwo.text}
+                      </Card.Body>
+                    </Card>
+                  ))
+                }
               </Card.Body>
             </Accordion.Collapse>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <ul>
                   {
-                    this.state.questions.map(question => (
-                      <Card bg="light" className="text-center">
+                    this.state.user.answeredQuestions.map((question, id) => (
+                      <Card bg="light" className="text-center" key={id}>
                         <Card.Header>
                           <h3>{question.author} asks</h3>
                         </Card.Header>
@@ -130,7 +135,6 @@ class Home extends Component {
                       </Card>
                     ))
                   }
-                </ul>
               </Card.Body>
             </Accordion.Collapse>
           </Card>
