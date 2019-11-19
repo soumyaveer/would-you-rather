@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from "react-bootstrap";
+import QuestionListItem from "./QuestionListItem";
 
 class QuestionsList extends Component {
 
@@ -19,20 +20,7 @@ class QuestionsList extends Component {
               <Card.Body>
                 {
                   unansweredQuestions.map((question, id) => (
-                    <Card bg="light" className="text-center" key={id}>
-                      <Card.Header>
-                        <h3>{question.author} asks</h3>
-                      </Card.Header>
-
-                      <Card.Body>
-                        <h3>Would you rather...</h3>
-                        {question.optionOne.text}
-                        <br/>
-                        OR
-                        <br/>
-                        {question.optionTwo.text}
-                      </Card.Body>
-                    </Card>
+                    <QuestionListItem question={question} key={id}/>
                   ))
                 }
               </Card.Body>
@@ -41,20 +29,7 @@ class QuestionsList extends Component {
               <Card.Body>
                 {
                   answeredQuestions.map((question, id) => (
-                    <Card bg="light" className="text-center" key={id}>
-                      <Card.Header>
-                        <h3>{question.author} asks</h3>
-                      </Card.Header>
-
-                      <Card.Body>
-                        <h3>Would you rather...</h3>
-                        {question.optionOne.text}
-                        <br/>
-                        OR
-                        <br/>
-                        {question.optionTwo.text}
-                      </Card.Body>
-                    </Card>
+                    <QuestionListItem question={question} key={id}/>
                   ))
                 }
               </Card.Body>
