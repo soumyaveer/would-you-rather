@@ -3,6 +3,16 @@ import { Accordion, Card } from "react-bootstrap";
 import QuestionListItem from "./QuestionListItem";
 
 class QuestionsList extends Component {
+  handlePollSelect = (value) => {
+    const question = this.findQuestion(value);
+    console.log(question)
+    this.props.onPollSelect(question)
+  }
+
+  findQuestion = (searchQuestionId) => {
+    console.log(this.props.questions);
+    return this.props.questions.filter(question =>  searchQuestionId === question.id)[0]
+  }
 
   render() {
     const { unansweredQuestions, answeredQuestions } = this.props
@@ -20,7 +30,7 @@ class QuestionsList extends Component {
               <Card.Body>
                 {
                   unansweredQuestions.map((question, id) => (
-                    <QuestionListItem question={question} key={id}/>
+                    <QuestionListItem question={question} key={id} onPollSelect={this.handlePollSelect}/>
                   ))
                 }
               </Card.Body>
@@ -29,7 +39,7 @@ class QuestionsList extends Component {
               <Card.Body>
                 {
                   answeredQuestions.map((question, id) => (
-                    <QuestionListItem question={question} key={id}/>
+                    <QuestionListItem question={question} key={id} onPollSelect={this.handlePollSelect}/>
                   ))
                 }
               </Card.Body>

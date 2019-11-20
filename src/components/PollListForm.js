@@ -1,19 +1,11 @@
 import React, {Component} from 'react';
-import { Card } from "react-bootstrap";
+import { Card, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 
-class QuestionListItem extends Component {
-
-  handleOnClick = (event) => {
-    console.log("Event", event.target);
-    console.log("Event", event.target.id);
-    this.props.onPollSelect(event.target.id)
-  }
-
+class PollListForm extends Component {
   render(){
     const {question} = this.props;
-    console.log("Question", question)
     return(
       <div>
         <Card bg="light" className="text-center">
@@ -23,15 +15,23 @@ class QuestionListItem extends Component {
 
           <Card.Body>
             <h3>Would you rather...</h3>
-            <p>{question.optionOne.text}</p>
+            <InputGroup className="mb-3">
+              <InputGroup.Radio aria-label="Radio">
+                {question.optionOne.text}
+              </InputGroup.Radio>
+            </InputGroup>
+
             OR
-            <p>{question.optionTwo.text}</p>
+
+            <InputGroup className="mb-3">
+              <InputGroup.Radio aria-label="Radio">
+                {question.optionTwo.text}
+              </InputGroup.Radio>
+            </InputGroup>
 
             <Link
               to={`/polls/${question.id}`}
               className='btn btn-outline-info'
-              id={question.id}
-              onClick={this.handleOnClick}
             >
               View Poll
             </Link>
@@ -42,4 +42,4 @@ class QuestionListItem extends Component {
   }
 }
 
-export default QuestionListItem;
+export default PollListForm;

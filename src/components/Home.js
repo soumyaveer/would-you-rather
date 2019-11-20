@@ -4,6 +4,7 @@ import QuestionsList from "./QuestionsList";
 
 class Home extends Component {
   state = {
+    questions: [],
     user: {
       answeredQuestions: [],
       unansweredQuestions: []
@@ -50,7 +51,8 @@ class Home extends Component {
   }
 
   extractQuestions = (response) => {
-    return Object.values(response)
+    return  Object.values(response)
+
   }
 
   updateState = (questions) => {
@@ -59,6 +61,7 @@ class Home extends Component {
     console.log("Answered", answeredQuestions)
     console.log("UnAnswered", unansweredQuestions)
     this.setState({
+      questions: questions,
       user: {
         answeredQuestions: answeredQuestions,
         unansweredQuestions: unansweredQuestions
@@ -66,6 +69,11 @@ class Home extends Component {
     }, () => {
       console.log("what is the state here", this.state)
     })
+  }
+
+  handleOnPollSelect = (value) => {
+    console.log("Inside Home", value)
+    this.props.onPollSelect(value)
   }
 
   componentDidMount() {
@@ -84,8 +92,10 @@ class Home extends Component {
     return (
       <QuestionsList
         className='well text-center'
+        questions={this.state.questions}
         unansweredQuestions={unansweredQuestions}
         answeredQuestions={answeredQuestions}
+        onPollSelect={this.handleOnPollSelect}
       />
     )
   }
