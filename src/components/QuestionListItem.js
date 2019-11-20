@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 
 class QuestionListItem extends Component {
-
   render(){
     const {question} = this.props;
     return(
@@ -21,7 +20,7 @@ class QuestionListItem extends Component {
             <p>{question.optionTwo.text}</p>
 
             <Link
-              to={`#`}
+              to={`/polls/${question.id}`}
               className='btn btn-outline-info'
             >
               View Poll
