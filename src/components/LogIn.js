@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Card, Dropdown } from "react-bootstrap";
-import { getUsers } from "../store/DATA";
 import { Link } from "react-router-dom";
 
 class LogIn extends Component {
@@ -8,28 +7,13 @@ class LogIn extends Component {
     currentUser: {
       name: 'Select User',
       id: ''
-    },
-    users: []
+    }
   };
-
-  updateUsersState = (users) => {
-    this.setState({
-      users: users
-    })
-  }
 
   updateCurrentUserState = (currentUser) => {
     this.setState({
       currentUser
     })
-  }
-
-  filterUsers = (response) => {
-    let users = [];
-    for (const user in response) {
-      users.push(response[user])
-    }
-    return users
   }
 
   handleOnClick = (event) => {
@@ -41,14 +25,14 @@ class LogIn extends Component {
     this.updateCurrentUserState(currentUser)
   };
 
-  componentDidMount() {
-    getUsers()
-      .then(response => this.filterUsers(response))
-      .then(users => this.updateUsersState(users))
-  }
+  handleOnSubmitClick = () => {
+    this.props.onLogIn(this.state.currentUser)
+  };
 
   render() {
-    const {currentUser, users} = this.state
+    const {currentUser} = this.state;
+    const {users} = this.props;
+
     return (
       <Card bg="light" className="text-center">
 
@@ -59,7 +43,6 @@ class LogIn extends Component {
 
         <Card.Body>
           <Card.Title>Sign In</Card.Title>
-
           <Dropdown>
             <Dropdown.Toggle variant="light" id="dropdown-basic" style={{ border: 'solid lightgray' }}>
               {currentUser.name}
@@ -83,7 +66,13 @@ class LogIn extends Component {
             <br/>
           </Dropdown>
 
-          <Link to={`${currentUser.id}/dashboard`} className='btn btn-info'>Submit</Link>
+          <Link
+            to={`${currentUser.id}/dashboard`}
+            className='btn btn-info'
+            onClick={this.handleOnSubmitClick}
+          >
+            Submit
+          </Link>
 
         </Card.Body>
       </Card>
