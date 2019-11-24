@@ -4,8 +4,16 @@ import { Link } from "react-router-dom";
 
 
 class QuestionListItem extends Component {
+
+  handleOnClick = (event) => {
+    console.log("Event", event.target);
+    console.log("Event", event.target.id);
+    this.props.onPollSelect(event.target.id)
+  }
+
   render(){
     const {question} = this.props;
+    console.log("Question", question);
     return(
       <div>
         <Card bg="light" className="text-center">
@@ -22,6 +30,8 @@ class QuestionListItem extends Component {
             <Link
               to={`/polls/${question.id}`}
               className='btn btn-outline-info'
+              id={question.id}
+              onClick={this.handleOnClick}
             >
               View Poll
             </Link>

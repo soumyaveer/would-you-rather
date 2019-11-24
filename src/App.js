@@ -6,6 +6,7 @@ import LogIn from "./components/LogIn";
 import Home from "./components/Home";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { getUsers } from "./store/DATA";
+import PollListItemForm from "./components/PollListItemForm";
 
 class App extends Component {
   state = {
@@ -14,7 +15,8 @@ class App extends Component {
       id: ''
     },
     users: [],
-    userLoggedIn: false
+    userLoggedIn: false,
+    question: {}
   };
 
   updateCurrentUserState = (newState) => {
@@ -49,9 +51,15 @@ class App extends Component {
       .then(users => this.updateUsersState(users))
   }
 
+  handleOnPollSelect = (question) => {
+    console.log("Inside App", question)
+    this.setState({
+      question: question
+    }, () => console.log("Question state", this.state))
+  }
 
   render() {
-    const {userLoggedIn, users, currentUser} = this.state;
+    const { userLoggedIn, users, currentUser, question } = this.state;
     console.log(userLoggedIn)
     return (
       <div>
@@ -59,7 +67,11 @@ class App extends Component {
         <BrowserRouter className="App">
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route exact path={`/${currentUser.id}/dashboard`} component={() => <Home currentUser={currentUser} users={users}/>}/>
+            <Route exact path={`/${currentUser.id}/dashboard`}
+                   component={() => <Home currentUser={currentUser} users={users}
+                                          onPollSelect={this.handleOnPollSelect}/>}/>
+            <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
+
           </Switch>
         </BrowserRouter>
       </div>
