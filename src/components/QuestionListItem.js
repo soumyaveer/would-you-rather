@@ -13,7 +13,7 @@ class QuestionListItem extends Component {
 
   render(){
     const {question} = this.props;
-    console.log("Question", question)
+    console.log("Question", question);
     return(
       <div>
         <Card bg="light" className="text-center">

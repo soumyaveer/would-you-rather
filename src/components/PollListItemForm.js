@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Card, Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import { saveQuestionAnswer } from "../store/DATA";
 
 class PollListItemForm extends Component {
   state = {
@@ -23,16 +24,31 @@ class PollListItemForm extends Component {
     });
   }
 
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    const { question, selectedOption } = this.state;
+    console.log(this.state.selectedOption);
+    const author = question.author;
+    const questionId = question.id;
+    console.log(author, questionId, selectedOption);
+
+    saveQuestionAnswer({ authedUser: author, qid: questionId, answer: selectedOption })
+      .then(
+        () => this.props.history.push(`/polls/results/${question.id}`))
+  }
+
   render() {
     const { question } = this.props;
     console.log("This is what I am receiving", question)
     return (
-      <form className='form-group'>
+      <form className='form-group' onSubmit={this.handleFormSubmit}>
         <Card bg="light" className="text-center">
           <Card.Header>
-            <h3>{question.author} asks</h3>
+            <h5>{question.author} asks</h5>
           </Card.Header>
           <Card.Body>
+            <h3>Would you Rather ...</h3>
+
             <div className='Radio'>
               <label>
                 <input
@@ -57,12 +73,9 @@ class PollListItemForm extends Component {
               </label>
             </div>
 
-            <Link
-              to={`/polls/${question.id}`}
-              className='btn btn-outline-info'
-            >
+            <Button variant='outline-info' type='submit'>
               Submit
-            </Link>
+            </Button>
           </Card.Body>
         </Card>
       </form>
@@ -70,4 +83,4 @@ class PollListItemForm extends Component {
   }
 }
 
-export default PollListItemForm;
+export default withRouter(PollListItemForm);

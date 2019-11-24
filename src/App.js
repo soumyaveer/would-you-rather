@@ -68,7 +68,8 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
             <Route exact path={`/${currentUser.id}/dashboard`}
-                   component={() => <Home currentUser={currentUser} users={users} onPollSelect={this.handleOnPollSelect}/>}/>
+                   component={() => <Home currentUser={currentUser} users={users}
+                                          onPollSelect={this.handleOnPollSelect}/>}/>
             <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
 
           </Switch>
