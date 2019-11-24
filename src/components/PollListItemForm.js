@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Card, InputGroup } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-class PollListForm extends Component {
+class PollListItemForm extends Component {
   state = {
     question: {},
     selectedOption: ''
@@ -70,4 +70,4 @@ class PollListForm extends Component {
   }
 }
 
-export default PollListForm;
+export default PollListItemForm;

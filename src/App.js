@@ -6,7 +6,7 @@ import LogIn from "./components/LogIn";
 import Home from "./components/Home";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { getUsers } from "./store/DATA";
-import PollListForm from "./components/PollListForm";
+import PollListItemForm from "./components/PollListItemForm";
 
 class App extends Component {
   state = {
@@ -59,7 +59,7 @@ class App extends Component {
   }
 
   render() {
-    const { userLoggedIn, users, currentUser } = this.state;
+    const { userLoggedIn, users, currentUser, question } = this.state;
     console.log(userLoggedIn)
     return (
       <div>
@@ -69,7 +69,7 @@ class App extends Component {
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
             <Route exact path={`/${currentUser.id}/dashboard`}
                    component={() => <Home currentUser={currentUser} users={users} onPollSelect={this.handleOnPollSelect}/>}/>
-            <Route exact path={`/polls/${this.state.question.id}`} component={() => <PollListForm question={this.state.question}/>}/>
+            <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
 
           </Switch>
         </BrowserRouter>
