@@ -1,32 +1,28 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Card, InputGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-
 class PollListForm extends Component {
-  render(){
-    const {question} = this.props;
-    return(
+  render() {
+    const { question } = this.props;
+    console.log("This is what I am receiving", question)
+    return (
       <div>
         <Card bg="light" className="text-center">
           <Card.Header>
             <h3>{question.author} asks</h3>
           </Card.Header>
-
           <Card.Body>
-            <h3>Would you rather...</h3>
             <InputGroup className="mb-3">
-              <InputGroup.Radio aria-label="Radio">
-                {question.optionOne.text}
-              </InputGroup.Radio>
-            </InputGroup>
-
-            OR
-
-            <InputGroup className="mb-3">
-              <InputGroup.Radio aria-label="Radio">
-                {question.optionTwo.text}
-              </InputGroup.Radio>
+              <InputGroup.Prepend>
+                <InputGroup.Radio aria-label="Radio"/>
+              </InputGroup.Prepend>
+              {question.optionOne.text}
+              OR
+              <InputGroup.Prepend>
+                <InputGroup.Radio aria-label="Radio" />
+              </InputGroup.Prepend>
+              {question.optionTwo.text}
             </InputGroup>
 
             <Link

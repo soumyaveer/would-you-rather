@@ -16,7 +16,7 @@ class App extends Component {
     },
     users: [],
     userLoggedIn: false,
-    selectedPoll: {}
+    question: {}
   };
 
   updateCurrentUserState = (newState) => {
@@ -54,8 +54,8 @@ class App extends Component {
   handleOnPollSelect = (question) => {
     console.log("Inside App", question)
     this.setState({
-      selectedPoll: Object.assign(this.state.selectedPoll, question, {})
-    }, () => console.log(this.state))
+      question: question
+    }, () => console.log("Question state", this.state))
   }
 
   render() {
@@ -69,7 +69,7 @@ class App extends Component {
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
             <Route exact path={`/${currentUser.id}/dashboard`}
                    component={() => <Home currentUser={currentUser} users={users} onPollSelect={this.handleOnPollSelect}/>}/>
-            <Route exact path={`/polls/8xf0y6ziyjabvozdd253nd`} component={() => <PollListForm question={this.state.selectedPoll}/>}/>
+            <Route exact path={`/polls/${this.state.question.id}`} component={() => <PollListForm question={this.state.question}/>}/>
 
           </Switch>
         </BrowserRouter>
