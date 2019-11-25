@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { getUsers } from "./store/DATA";
 import PollListItemForm from "./components/PollListItemForm";
+import LeaderBoard from "./components/LeaderBoard";
 
 class App extends Component {
   state = {
@@ -71,6 +72,7 @@ class App extends Component {
                    component={() => <Home currentUser={currentUser} users={users}
                                           onPollSelect={this.handleOnPollSelect}/>}/>
             <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
+            <Route exact path='/leaderboard' component={() => <LeaderBoard />}/>
 
           </Switch>
         </BrowserRouter>
