@@ -29,7 +29,7 @@ class LeaderBoard extends Component {
     const { scoreCards } = this.state;
     return (
       <div className='container'>
-        <ul className='list-unstyled'>
+        <ul className='list-unstyled' style={{marginTop: 10}}>
           {
             scoreCards.map(scoreCard =>
               <li key={scoreCard.name} className='mx-auto'>
