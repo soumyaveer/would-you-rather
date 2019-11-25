@@ -74,7 +74,8 @@ class App extends Component {
                                           onPollSelect={this.handleOnPollSelect}/>}/>
             <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
             <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
-            <Route exact path={`/poll/results/${question.id}`} component={() => <PollResults question={question}/>}/>
+            <Route exact path={`/poll/results/${question.id}`}
+                   component={() => <PollResults question={question} currentUser={currentUser}/>}/>
 
           </Switch>
         </BrowserRouter>
