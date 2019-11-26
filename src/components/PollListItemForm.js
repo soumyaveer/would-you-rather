@@ -33,8 +33,7 @@ class PollListItemForm extends Component {
     console.log(author, questionId, selectedOption);
 
     saveQuestionAnswer({ authedUser: author, qid: questionId, answer: selectedOption })
-      .then(
-        () => this.props.history.push(`/poll/results/${question.id}`))
+      .then(() => this.props.history.push(`/poll/results/${question.id}`))
   }
 
   render() {

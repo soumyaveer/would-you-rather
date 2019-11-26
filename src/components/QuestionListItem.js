@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import PollResults from "./PollResults";
 
 
 class QuestionListItem extends Component {
@@ -11,10 +12,10 @@ class QuestionListItem extends Component {
     this.props.onPollSelect(event.target.id)
   }
 
-  render(){
-    const {question} = this.props;
-    console.log("Question", question);
-    return(
+  render() {
+    const { question, currentUser, isQuestionAnswered } = this.props;
+    console.log("Question", question, currentUser);
+    return (
       <div>
         <Card bg="light" className="text-center">
           <Card.Header>
@@ -26,15 +27,22 @@ class QuestionListItem extends Component {
             <p>{question.optionOne.text}</p>
             OR
             <p>{question.optionTwo.text}</p>
+            {
+              isQuestionAnswered
+                ? <Link to={`/poll/results/${question.id}`}
+                        className='btn btn-outline-info'
+                        id={question.id}
+                        onClick={this.handleOnClick}>View Poll</Link>
+                : <Link
+                  to={`/polls/${question.id}`}
+                  className='btn btn-outline-info'
+                  id={question.id}
+                  onClick={this.handleOnClick}
+                >
+                  View Poll
+                </Link>
+            }
 
-            <Link
-              to={`/polls/${question.id}`}
-              className='btn btn-outline-info'
-              id={question.id}
-              onClick={this.handleOnClick}
-            >
-              View Poll
-            </Link>
           </Card.Body>
         </Card>
       </div>

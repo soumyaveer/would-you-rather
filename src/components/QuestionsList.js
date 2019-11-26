@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from "react-bootstrap";
 import QuestionListItem from "./QuestionListItem";
+import PollResults from "./PollResults";
 
 class QuestionsList extends Component {
   handlePollSelect = (value) => {
@@ -11,11 +12,11 @@ class QuestionsList extends Component {
 
   findQuestion = (searchQuestionId) => {
     console.log(this.props.questions);
-    return this.props.questions.filter(question =>  searchQuestionId === question.id)[0]
+    return this.props.questions.filter(question => searchQuestionId === question.id)[0]
   }
 
   render() {
-    const { unansweredQuestions, answeredQuestions } = this.props
+    const { unansweredQuestions, answeredQuestions, currentUser } = this.props
     return (
       <div className='text-center'>
         <Accordion defaultActiveKey="0">
@@ -30,7 +31,13 @@ class QuestionsList extends Component {
               <Card.Body>
                 {
                   unansweredQuestions.map((question, id) => (
-                    <QuestionListItem question={question} key={id} onPollSelect={this.handlePollSelect}/>
+                    <QuestionListItem
+                      question={question}
+                      key={id}
+                      onPollSelect={this.handlePollSelect}
+                      isQuestionAnswered={false}
+                      currentUser={this.props.currentUser}
+                    />
                   ))
                 }
               </Card.Body>
@@ -39,7 +46,13 @@ class QuestionsList extends Component {
               <Card.Body>
                 {
                   answeredQuestions.map((question, id) => (
-                    <QuestionListItem question={question} key={id} onPollSelect={this.handlePollSelect}/>
+                    <QuestionListItem
+                      question={question}
+                      key={id}
+                      onPollSelect={this.handlePollSelect}
+                      isQuestionAnswered={true}
+                      currentUser={this.props.currentUser}
+                    />
                   ))
                 }
               </Card.Body>

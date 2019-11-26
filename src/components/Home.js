@@ -95,6 +95,7 @@ class Home extends Component {
         questions={this.state.questions}
         unansweredQuestions={unansweredQuestions}
         answeredQuestions={answeredQuestions}
+        currentUser={this.props.currentUser}
         onPollSelect={this.handleOnPollSelect}
       />
     )

@@ -9,6 +9,7 @@ import { getUsers } from "./store/DATA";
 import PollListItemForm from "./components/PollListItemForm";
 import LeaderBoard from "./components/LeaderBoard";
 import PollResults from "./components/PollResults";
+import NewQuestionForm from "./components/NewQuestionForm";
 
 class App extends Component {
   state = {
@@ -76,7 +77,7 @@ class App extends Component {
             <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
             <Route exact path={`/poll/results/${question.id}`}
                    component={() => <PollResults question={question} currentUser={currentUser}/>}/>
-
+            <Route exact path='/create_question' component={() => <NewQuestionForm currentUser={currentUser}/>}/>
           </Switch>
         </BrowserRouter>
       </div>
