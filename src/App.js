@@ -14,8 +14,10 @@ import NewQuestionForm from "./components/NewQuestionForm";
 class App extends Component {
   state = {
     currentUser: {
-      name: '',
-      id: ''
+      id: '',
+      name: 'Select User',
+      avatarURL: '',
+      answers: {}
     },
     users: [],
     userLoggedIn: false,
@@ -41,11 +43,7 @@ class App extends Component {
   }
 
   filterUsers = (response) => {
-    let users = [];
-    for (const user in response) {
-      users.push(response[user])
-    }
-    return users
+    return Object.values(response)
   };
 
   componentDidMount() {
@@ -77,7 +75,7 @@ class App extends Component {
             <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
             <Route exact path={`/poll/results/${question.id}`}
                    component={() => <PollResults question={question} currentUser={currentUser}/>}/>
-            <Route exact path='/create_question' component={() => <NewQuestionForm currentUser={currentUser}/>}/>
+            <Route exact path={`/${currentUser.id}/create_question`} component={() => <NewQuestionForm currentUser={currentUser}/>}/>
           </Switch>
         </BrowserRouter>
       </div>

@@ -5,8 +5,10 @@ import { Link } from "react-router-dom";
 class LogIn extends Component {
   state = {
     currentUser: {
+      id: '',
       name: 'Select User',
-      id: ''
+      avatarURL: '',
+      answers: {}
     }
   };
 
@@ -14,24 +16,28 @@ class LogIn extends Component {
     this.setState({
       currentUser
     })
-  }
+  };
 
   handleOnClick = (event) => {
     event.preventDefault();
-    const currentUser = {
-      name: event.target.textContent,
-      id: event.target.id
-    };
+
+    const userId = event.target.id
+    const currentUser = this.findUserById(userId);
     this.updateCurrentUserState(currentUser)
   };
+
+  findUserById = userId => {
+    const { users } = this.props;
+    return users.filter(user => user.id === userId)[0]
+  }
 
   handleOnSubmitClick = () => {
     this.props.onLogIn(this.state.currentUser)
   };
 
   render() {
-    const {currentUser} = this.state;
-    const {users} = this.props;
+    const { currentUser } = this.state;
+    const { users } = this.props;
 
     return (
       <Card bg="light" className="text-center">
