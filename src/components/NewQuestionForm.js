@@ -1,10 +1,65 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Button, Card } from "react-bootstrap";
+import { saveQuestion } from "../store/DATA";
+import { withRouter } from 'react-router-dom';
 
 class NewQuestionForm extends Component {
-  render(){
-    return(
-      <div style={{marginTop: 20}}>
+  state = {
+    newQuestion: {
+      author: "sarahedo",
+      optionOneText: '',
+      optionTwoText: ''
+    }
+  };
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    console.log("Values for new question", event.target)
+    const question = this.state.newQuestion;
+    saveQuestion(question)
+      .then(response => console.log("Question Added?", response))
+      .then(() => this.props.history.push('/sarahedo/dashboard'))
+  };
+
+  componentDidMount() {
+    this.updateState()
+  }
+
+  updateState = () => {
+    console.log(this.props.currentUser)
+    this.setState({
+      newQuestion: {
+        ...this.state.newQuestion,
+        // TODO: Add author once login is sorted out.
+      }
+    }, () => console.log(this.state.newQuestion))
+  };
+
+  handleOptionOneChange = event => {
+    console.log('Option One value', event.target.value);
+    this.setState({
+      newQuestion: {
+        ...this.state.newQuestion,
+        optionOneText: event.target.value
+      }
+    })
+  }
+
+  handleOptionTwoChange = event => {
+    console.log('Option two value', event.target.value);
+    this.setState({
+      newQuestion: {
+        ...this.state.newQuestion,
+        optionTwoText: event.target.value
+      }
+    })
+  }
+
+  render() {
+    const { newQuestion } = this.state;
+
+    return (
+      <div style={{ marginTop: 20 }}>
         <form className='form-group mx-auto col-sm-6' onSubmit={this.handleFormSubmit}>
           <Card bg="light" className="text-center">
             <Card.Header>
@@ -14,23 +69,27 @@ class NewQuestionForm extends Component {
               <h5>Complete the question</h5>
               <h3>Would you Rather ...</h3>
 
-              <div className=''>
-                <label>
-                  <input
-                    className='form-control'
-                    type="text"
-                    name="answer"
-                    onChange={this.handleRadioButtonSelectionChange}/>
-                </label>
-              </div>
-              <h5>OR </h5>
               <div>
                 <label>
                   <input
                     className='form-control'
                     type="text"
                     name="answer"
-                    onChange={this.handleRadioButtonSelectionChange}/>
+                    value={newQuestion.optionOneText || ''}
+                    onChange={this.handleOptionOneChange}/>
+                </label>
+              </div>
+
+              <h5> OR </h5>
+
+              <div>
+                <label>
+                  <input
+                    className='form-control'
+                    type="text"
+                    name="answer"
+                    value={newQuestion.optionTwoText || ''}
+                    onChange={this.handleOptionTwoChange}/>
                 </label>
               </div>
 
@@ -45,4 +104,5 @@ class NewQuestionForm extends Component {
   }
 }
 
-export default NewQuestionForm;
+export default withRouter(NewQuestionForm);
+
