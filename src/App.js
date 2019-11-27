@@ -14,7 +14,7 @@ import NewQuestionForm from "./components/NewQuestionForm";
 class App extends Component {
   state = {
     currentUser: {
-      id: undefined,
+      id: '',
       name: '',
       avatarURL: '',
       answers: {}
@@ -36,15 +36,16 @@ class App extends Component {
     this.updateCurrentUserState(values)
   }
 
-  handleLogOut = () => {
+  handleLogOut = (values) => {
     console.log("Logging out here")
     this.updateCurrentUserState({
       currentUser: {
-        id: undefined,
+        id: '',
         name: '',
         avatarURL: '',
         answers: {}
-      }
+      },
+      userLoggedIn: false
     }, () => this.props.history.push('/'))
   }
 
@@ -76,8 +77,8 @@ class App extends Component {
     console.log(userLoggedIn)
     return (
       <div>
-        <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
         <BrowserRouter className="App">
+          <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
             <Route exact path='/home'

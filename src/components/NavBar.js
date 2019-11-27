@@ -1,26 +1,35 @@
 import React, { Component } from 'react';
-import { Navbar, Nav } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Navbar, Nav, Button } from "react-bootstrap";
+import { withRouter} from 'react-router-dom';
 
 class NavBar extends Component {
   state = {
-    currentUser: this.props.currentUser,
-    userLoggedIn: this.props.userLoggedIn
+    currentUser: {},
+    userLoggedIn: false
   };
 
   handleLogoutClick = () => {
-    this.props.onLogoutButtonClick()
+    this.setState(
+      {
+        currentUser: {},
+        userLoggedIn: false
+      },
+      () => {
+        this.props.onLogoutButtonClick(this.state);
+        this.props.history.push('/')
+      })
   };
 
-  updateState = () => {
+  updateState = (newState) => {
+    const { currentUser, userLoggedIn } = newState
     this.setState({
-      currentUser: '',
-      userLoggedIn: false
-    })
-  }
+      currentUser,
+      userLoggedIn,
+    }, () => console.log("This is the state of the navbar", this.state))
+  };
 
   componentDidMount() {
-    this.updateState();
+    this.updateState(this.props);
   }
 
   render() {
@@ -47,7 +56,7 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);
 
 // If window.current_user is true , user is logged in. -> Allow redirect to NewQuestions and LeaderBorad
 // Otherwise redirect to Sign up page.
