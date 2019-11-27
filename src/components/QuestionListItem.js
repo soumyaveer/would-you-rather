@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-
 class QuestionListItem extends Component {
 
   handleOnClick = (event) => {
