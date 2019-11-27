@@ -74,7 +74,7 @@ class LogIn extends Component {
           </Dropdown>
 
           <Link
-            to='/home'
+            to={`/home`}
             className='btn btn-info'
             onClick={this.handleOnSubmitClick}
           >
@@ -86,5 +86,4 @@ class LogIn extends Component {
     )
   }
 }
-
 export default LogIn;

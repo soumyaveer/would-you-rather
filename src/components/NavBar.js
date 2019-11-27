@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Button } from "react-bootstrap";
-import { withRouter} from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 class NavBar extends Component {
   state = {
@@ -29,7 +29,11 @@ class NavBar extends Component {
   };
 
   componentDidMount() {
-    this.updateState(this.props);
+    const { currentUser, userLoggedIn } = this.props
+    this.setState({
+      currentUser,
+      userLoggedIn,
+    }, () => console.log("This is the state of the navbar", this.state))
   }
 
   render() {
@@ -40,9 +44,21 @@ class NavBar extends Component {
       <Navbar bg="light" expand="lg">
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-sm-auto">
-            <Nav.Link href="/"> Home </Nav.Link>
-            <Nav.Link href={`/create_question`}>New Question</Nav.Link>
-            <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
+            {
+              userLoggedIn
+                ? <Nav.Link href={`/home`}> Home </Nav.Link>
+                : <Nav.Link href="/"> Home </Nav.Link>
+            }
+            {
+              userLoggedIn
+                ? <Nav.Link href={`/create_question`}>New Question</Nav.Link>
+                : <Nav.Link href='/'>New Question</Nav.Link>
+            }
+            {
+              userLoggedIn
+                ? <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
+                : <Nav.Link href="/">LeaderBoard</Nav.Link>
+            }
             {
               userLoggedIn && <Nav.Link inactive='true'>Hello, {currentUser.name}</Nav.Link>
             }

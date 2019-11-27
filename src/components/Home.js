@@ -34,8 +34,6 @@ class Home extends Component {
         answerId !== question.id && unAnsweredQuestions.push(question)
       )
     }
-
-
     console.log("These questions are not answered", unAnsweredQuestions)
     return unAnsweredQuestions;
   }

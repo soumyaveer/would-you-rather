@@ -33,12 +33,19 @@ class App extends Component {
 
   handleLogIn = (values) => {
     console.log('Raising the state up', values)
-    this.updateCurrentUserState(values)
-  }
+    this.setState({
+      currentUser: values,
+      userLoggedIn: true
+    })
+  };
+
+  setLocalStorage = (key, value) => {
+    localStorage.setItem(key, value)
+  };
 
   handleLogOut = (values) => {
     console.log("Logging out here")
-    this.updateCurrentUserState({
+    this.setState({
       currentUser: {
         id: '',
         name: '',
@@ -46,7 +53,7 @@ class App extends Component {
         answers: {}
       },
       userLoggedIn: false
-    }, () => this.props.history.push('/'))
+    })
   }
 
   updateUsersState = (users) => {
@@ -81,16 +88,14 @@ class App extends Component {
           <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route exact path='/home'
+            <Route path={`/home`}
                    component={() => <Home currentUser={currentUser} users={users}
                                           onPollSelect={this.handleOnPollSelect}/>}/>
             <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
             <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
             <Route exact path={`/poll/results/${question.id}`}
                    component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
-            <Route exact path={'/create_question'} component={() => <NewQuestionForm currentUser={currentUser}/>}/>
-
-
+            <Route path={'/create_question'} component={() => <NewQuestionForm currentUser={currentUser}/>}/>
           </Switch>
         </BrowserRouter>
       </div>
