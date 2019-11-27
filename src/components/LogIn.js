@@ -15,7 +15,7 @@ class LogIn extends Component {
   updateCurrentUserState = (currentUser) => {
     this.setState({
       currentUser
-    })
+    }, () => console.log("State updated in the Login component for currentUser", this.state.currentUser))
   };
 
   handleOnClick = (event) => {
@@ -23,6 +23,7 @@ class LogIn extends Component {
 
     const userId = event.target.id
     const currentUser = this.findUserById(userId);
+    console.log('Check what you recieve here?', currentUser)
     this.updateCurrentUserState(currentUser)
   };
 
@@ -38,7 +39,7 @@ class LogIn extends Component {
   render() {
     const { currentUser } = this.state;
     const { users } = this.props;
-
+    console.log('Am I going inside this component')
     return (
       <Card bg="light" className="text-center">
 
@@ -73,7 +74,7 @@ class LogIn extends Component {
           </Dropdown>
 
           <Link
-            to={`${currentUser.id}/dashboard`}
+            to='/home'
             className='btn btn-info'
             onClick={this.handleOnSubmitClick}
           >

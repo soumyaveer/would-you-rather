@@ -14,8 +14,8 @@ import NewQuestionForm from "./components/NewQuestionForm";
 class App extends Component {
   state = {
     currentUser: {
-      id: '',
-      name: 'Select User',
+      id: undefined,
+      name: '',
       avatarURL: '',
       answers: {}
     },
@@ -34,6 +34,18 @@ class App extends Component {
   handleLogIn = (values) => {
     console.log('Raising the state up', values)
     this.updateCurrentUserState(values)
+  }
+
+  handleLogOut = () => {
+    console.log("Logging out here")
+    this.updateCurrentUserState({
+      currentUser: {
+        id: undefined,
+        name: '',
+        avatarURL: '',
+        answers: {}
+      }
+    }, () => this.props.history.push('/login'))
   }
 
   updateUsersState = (users) => {
@@ -57,25 +69,27 @@ class App extends Component {
     this.setState({
       question: question
     }, () => console.log("Question state", this.state))
-  }
+  };
 
   render() {
     const { userLoggedIn, users, currentUser, question } = this.state;
     console.log(userLoggedIn)
     return (
       <div>
-        <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn}/>
+        <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
         <BrowserRouter className="App">
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route exact path={`/${currentUser.id}/dashboard`}
+            <Route exact path={`/home`}
                    component={() => <Home currentUser={currentUser} users={users}
                                           onPollSelect={this.handleOnPollSelect}/>}/>
             <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
             <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
             <Route exact path={`/poll/results/${question.id}`}
-                   component={() => <PollResults question={question} currentUser={currentUser}/>}/>
-            <Route exact path={`/${currentUser.id}/create_question`} component={() => <NewQuestionForm currentUser={currentUser}/>}/>
+                   component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
+            <Route exact path={'/create_question'} component={() => <NewQuestionForm currentUser={currentUser}/>}/>
+
+
           </Switch>
         </BrowserRouter>
       </div>

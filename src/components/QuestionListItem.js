@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import PollResults from "./PollResults";
 
 
 class QuestionListItem extends Component {

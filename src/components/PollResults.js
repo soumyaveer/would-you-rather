@@ -6,8 +6,15 @@ class PollResults extends Component {
     return (numberOfVotesForOption / totalVotes) * 100
   }
 
+  findAuthorById = () => {
+    const {users, question} = this.props
+
+    return users.filter(user => user.id === question.author)[0]
+  }
+
   render() {
     console.log("Checking the query params", this.props);
+    const author = this.findAuthorById();
     const { question, currentUser } = this.props;
     const optionOneVotesCount = question.optionOne.votes.length;
     const optionTwoVotesCount = question.optionTwo.votes.length;
@@ -27,9 +34,11 @@ class PollResults extends Component {
               </Card.Header>
 
               <Card.Body>
-                <h3>Results:</h3>
+                <Image src={`${author.avatarURL}`} roundedCircle/>
+                <h3>Results</h3>
                 <div className='well'>
                   <span>
+
                     <h6 className='text-info'>Would you rather {question.optionOne.text}?
                     {
                       votedForOptionOne &&

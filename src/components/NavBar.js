@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Nav } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import LogIn from "./LogIn";
 
 class NavBar extends Component {
   state = {
@@ -9,10 +8,8 @@ class NavBar extends Component {
     userLoggedIn: this.props.userLoggedIn
   };
 
-  handleLogoutClick = (event) => {
-    console.log(event.target);
-    event.preventDefault();
-
+  handleLogoutClick = () => {
+    this.props.onLogoutButtonClick()
   };
 
   updateState = () => {
@@ -22,27 +19,20 @@ class NavBar extends Component {
     })
   }
 
-  handleOnClick = () => {
-    if (!this.state.userLoggedIn) {
-      this.props.history.push('/')
-    }
-  }
-
   componentDidMount() {
     this.updateState();
   }
 
   render() {
     const { currentUser, userLoggedIn } = this.props;
-    const isLoggedIn = !!window.current_user;
-    console.log("Is user logged in?", isLoggedIn);
+    console.log("Is user logged in?", this.props.userLoggedIn);
 
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-sm-auto">
             <Nav.Link href="/"> Home </Nav.Link>
-            <Nav.Link href={`/${currentUser.id}/create_question`}>New Question</Nav.Link>
+            <Nav.Link href={`/create_question`}>New Question</Nav.Link>
             <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
             {
               userLoggedIn && <Nav.Link inactive='true'>Hello, {currentUser.name}</Nav.Link>
