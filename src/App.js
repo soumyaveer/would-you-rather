@@ -45,7 +45,7 @@ class App extends Component {
         avatarURL: '',
         answers: {}
       }
-    }, () => this.props.history.push('/login'))
+    }, () => this.props.history.push('/'))
   }
 
   updateUsersState = (users) => {
@@ -80,7 +80,7 @@ class App extends Component {
         <BrowserRouter className="App">
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route exact path={`/home`}
+            <Route exact path='/home'
                    component={() => <Home currentUser={currentUser} users={users}
                                           onPollSelect={this.handleOnPollSelect}/>}/>
             <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
