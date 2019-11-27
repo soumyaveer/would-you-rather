@@ -13,9 +13,10 @@ export const loadQuestions = (questions) => {
   }
 };
 
-export const addPoll = (answer) => {
+export const answerQuestion = (question, answer) => {
   return {
-    type: 'ADD_POLL',
+    type: 'ANSWER_QUESTION',
+    question,
     answer
   }
 };
@@ -29,9 +30,9 @@ export const addQuestion = (question, questionId) => {
 };
 
 //TODO: What should be the value of this function. TBD
-export const selectUser = (user) => {
+export const loginUser = (user) => {
   return {
-    type: 'SELECT_USER',
+    type: 'LOGIN_USER',
     user
   }
 };
