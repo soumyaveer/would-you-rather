@@ -20,7 +20,6 @@ export const addPoll = (answer) => {
   }
 };
 
-
 export const addQuestion = (question, questionId) => {
   return {
     type: 'ADD_QUESTION',
@@ -28,3 +27,19 @@ export const addQuestion = (question, questionId) => {
     question
   }
 };
+
+//TODO: What should be the value of this function. TBD
+export const selectUser = (user) => {
+  return {
+    type: 'SELECT_USER',
+    user
+  }
+};
+
+//TODO: What should be the return value of this function. TBD
+export const logOut = (users) => {
+  return {
+    type: 'LOG_OUT',
+    users
+  }
+}
