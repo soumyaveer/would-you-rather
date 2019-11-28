@@ -36,9 +36,9 @@ export const loginUser = (id) => {
 };
 
 //TODO: What should be the return value of this function. TBD
-export const logOut = (users) => {
+export const logOutUser = (id) => {
   return {
-    type: 'LOG_OUT',
-    users
+    type: 'LOGOUT_USER',
+    id
   }
 }
