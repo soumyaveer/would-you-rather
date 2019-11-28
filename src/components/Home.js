@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getQuestions } from "../store/DATA";
+import { _getQuestions } from "../utils/_DATA";
 import QuestionsList from "./QuestionsList";
 
 class Home extends Component {
@@ -73,7 +73,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    getQuestions()
+    _getQuestions()
       .then(response => {
         console.log(response)
         return this.extractQuestions(response)

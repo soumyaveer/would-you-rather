@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar";
 import LogIn from "./components/LogIn";
 import Home from "./components/Home";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { getUsers } from "./store/DATA";
+import { _getUsers } from "./utils/_DATA";
 import PollListItemForm from "./components/PollListItemForm";
 import LeaderBoard from "./components/LeaderBoard";
 import PollResults from "./components/PollResults";
@@ -67,7 +67,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    getUsers()
+    _getUsers()
       .then(response => this.filterUsers(response))
       .then(users => this.updateUsersState(users))
   }

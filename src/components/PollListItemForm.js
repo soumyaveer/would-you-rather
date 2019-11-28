@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import { saveQuestionAnswer } from "../store/DATA";
+import { _saveQuestionAnswer } from "../utils/_DATA";
 
 class PollListItemForm extends Component {
   state = {
@@ -32,7 +32,7 @@ class PollListItemForm extends Component {
     const questionId = question.id;
     console.log(author, questionId, selectedOption);
 
-    saveQuestionAnswer({ authedUser: author, qid: questionId, answer: selectedOption })
+    _saveQuestionAnswer({ authedUser: author, qid: questionId, answer: selectedOption })
       .then(() => this.props.history.push(`/poll/results/${question.id}`))
   }
 

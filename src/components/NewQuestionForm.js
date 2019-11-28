@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Card } from "react-bootstrap";
-import { saveQuestion } from "../store/DATA";
+import { _saveQuestion } from "../utils/_DATA";
 import { withRouter } from 'react-router-dom';
 
 class NewQuestionForm extends Component {
@@ -16,7 +16,7 @@ class NewQuestionForm extends Component {
     event.preventDefault();
     console.log("Values for new question", event.target)
     const question = this.state.newQuestion;
-    saveQuestion(question)
+    _saveQuestion(question)
       .then(response => console.log("Question Added?", response))
       .then(() => this.props.history.push('/sarahedo/dashboard'))
   };
