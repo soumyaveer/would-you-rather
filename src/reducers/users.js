@@ -1,10 +1,10 @@
 const users = (state = [], action) => {
   switch (action.type) {
     case 'LOAD_USERS':
-      return [
+      return {
         ...state,
-        //TODO: return all the users
-      ]
+        ...action.users
+      }
     default:
       return state
   }

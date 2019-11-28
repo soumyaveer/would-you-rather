@@ -1,10 +1,10 @@
 const questions = (state=[], action) =>{
   switch(action.type) {
     case 'LOAD_QUESTIONS':
-      return [
+      return {
         ...state,
-        //TODO: load fetched questions
-      ]
+        ...action.questions
+      }
     case 'ANSWER_QUESTION':
       return[
         ...state,

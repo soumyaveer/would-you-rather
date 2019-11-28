@@ -1,10 +1,7 @@
-const authedUser = (state=[], action) => {
+const authedUser = (state = null, action) => {
   switch(action.type){
     case 'LOGIN_USER':
-      return[
-        ...state,
-        //TODO: Add logged in user here
-      ]
+      return action.id
     case 'LOGOUT_USER':
       return [
         ...state,
