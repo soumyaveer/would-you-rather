@@ -30,10 +30,10 @@ export const addQuestion = (question, questionId) => {
 };
 
 //TODO: What should be the value of this function. TBD
-export const loginUser = (user) => {
+export const loginUser = (id) => {
   return {
     type: 'LOGIN_USER',
-    user
+    id
   }
 };
 
