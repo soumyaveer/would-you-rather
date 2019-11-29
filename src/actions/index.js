@@ -58,20 +58,20 @@ const addQuestion = (question) => {
 const addQuestionToAuthorList = ({id, author}) => {
   return {
     type: 'ADD_QUESTION_TO_AUTHOR_LIST',
-    qid,
+    id,
     author
   }
 }
 
 export const handleAddQuestion = ({ optionOneText, optionTwoText, author }) => {
-  return (dispatch) => {
-
+  return (dispatch, getState) => {
+    const {authedUser} = getState();
     dispatch(showLoading())
 
     return saveQuestion({
       optionOneText,
       optionTwoText,
-      author
+      author: authedUser
     })
       .then((question) => {
         dispatch(addQuestion(question))
