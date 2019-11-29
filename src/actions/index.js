@@ -15,7 +15,7 @@ export const loadQuestions = (questions) => {
 };
 
 // Adds
-const answerQuestion = ( authedUser, qid, answer ) => {
+const answerQuestion = ({ authedUser, qid, answer }) => {
   return {
     type: 'ANSWER_QUESTION',
     qid,
@@ -24,7 +24,7 @@ const answerQuestion = ( authedUser, qid, answer ) => {
   }
 };
 
-const addAnswerToUserAnswers = (authedUser, qid, answer) => {
+const addAnswerToUserAnswers = ({ authedUser, qid, answer }) => {
   return {
     type: 'ADD_ANSWER_TO_USER_ANSWERS',
     authedUser,
@@ -33,18 +33,18 @@ const addAnswerToUserAnswers = (authedUser, qid, answer) => {
   }
 }
 
-export const handleAnswerSave = (information) => {
+export const handleAnswerSave = (data) => {
   return dispatch => {
-    dispatch(answerQuestion(information))
-    dispatch(addAnswerToUserAnswers(information))
-    return saveQuestionAnswer(information)
-      .catch(error => {
-        console.warn('Error in handleAnswerSave:', error)
-        dispatch(answerQuestion(information))
-        alert('Error saving the answer for this question. Try again')
-      })
+    dispatch(answerQuestion(data))
+    dispatch(addAnswerToUserAnswers(data))
+    return (
+      saveQuestionAnswer(data)
+        .catch(error => {
+          console.warn('Error in handleAnswerSave:', error)
+        })
+    )
   }
-}
+};
 
 export const addQuestion = (question, questionId) => {
   return {

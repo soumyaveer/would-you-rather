@@ -1,28 +1,28 @@
 import React, { Component } from 'react'
 import { Card, Image, Badge } from "react-bootstrap";
+import { connect } from 'react-redux';
 
 class PollResults extends Component {
   votesPercentage = (numberOfVotesForOption, totalVotes) => {
     return (numberOfVotesForOption / totalVotes) * 100
   }
 
-  findAuthorById = () => {
-    const {users, question} = this.props
-
-    return users.filter(user => user.id === question.author)[0]
-  }
+  // findAuthorById = () => {
+  //   const {users, question} = this.props
+  //
+  //   return users.filter(user => user.id === question.author)[0]
+  // }
 
   render() {
     console.log("Checking the query params", this.props);
-    const author = this.findAuthorById();
-    const { question, currentUser } = this.props;
+    const { question, author, authedUser } = this.props;
     const optionOneVotesCount = question.optionOne.votes.length;
     const optionTwoVotesCount = question.optionTwo.votes.length;
     const totalVotes = optionOneVotesCount + optionTwoVotesCount;
     const optionOneVotesPercent = this.votesPercentage(optionOneVotesCount, totalVotes);
     const optionTwoVotesPercent = this.votesPercentage(optionTwoVotesCount, totalVotes);
-    const votedForOptionOne = question.optionOne.votes.includes(currentUser.id)
-    const votedForOptionTwo = question.optionTwo.votes.includes(currentUser.id);
+    const votedForOptionOne = question.optionOne.votes.includes(authedUser)
+    const votedForOptionTwo = question.optionTwo.votes.includes(authedUser);
 
     return (
       <div className='container'>
@@ -30,7 +30,7 @@ class PollResults extends Component {
           <div>
             <Card bg="light" className="text-center">
               <Card.Header>
-                <h3>Asked by {question.author}</h3>
+                <h3>Asked by {author.name}</h3>
               </Card.Header>
 
               <Card.Body>
@@ -75,7 +75,6 @@ class PollResults extends Component {
                          aria-valuemin="0" aria-valuemax="100" />
                   </div>
                   <h6>{optionTwoVotesCount} out of {totalVotes}</h6>
-
                 </div>
               </Card.Body>
             </Card>
@@ -86,4 +85,17 @@ class PollResults extends Component {
   }
 }
 
-export default PollResults;
+const mapStateToProps = ({authedUser, users, questions}, {question}) => {
+  const filteredQuestion = questions[question.id];
+  const authorId = filteredQuestion.author;
+  const author = users[authorId];
+
+  return {
+    authedUser,
+    question: filteredQuestion,
+    author: author
+  }
+}
+
+
+export default connect(mapStateToProps)(PollResults);

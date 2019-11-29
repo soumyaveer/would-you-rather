@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Button } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
-import { _saveQuestionAnswer } from "../utils/_DATA";
+import { handleAnswerSave } from "../actions";
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class PollListItemForm extends Component {
   state = {
@@ -26,19 +27,18 @@ class PollListItemForm extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const { question, selectedOption } = this.state;
-    console.log(this.state.selectedOption);
-    const author = question.author;
-    const questionId = question.id;
-    console.log(author, questionId, selectedOption);
-
-    _saveQuestionAnswer({ authedUser: author, qid: questionId, answer: selectedOption })
-      .then(() => this.props.history.push(`/poll/results/${question.id}`))
+    const { dispatch, question, authedUser } = this.props;
+    dispatch(handleAnswerSave({
+      qid: question.id,
+      answer: this.state.selectedOption,
+      authedUser
+    }))
+      .then(this.props.history.push(`/poll/results/${question.id}`))
   }
 
   render() {
     const { question } = this.props;
-    console.log("This is what I am receiving", question)
+    console.log("This is what I am receiving", this.props)
     return (
       <form className='form-group' onSubmit={this.handleFormSubmit}>
         <Card bg="light" className="text-center">
@@ -82,4 +82,13 @@ class PollListItemForm extends Component {
   }
 }
 
-export default withRouter(PollListItemForm);
+const mapStateToProps = ({ authedUser, users, questions }, { question }) => {
+  const filteredQuestion = questions[question.id]
+  return {
+    authedUser,
+    question: filteredQuestion
+  }
+}
+
+
+export default withRouter(connect(mapStateToProps)(PollListItemForm));

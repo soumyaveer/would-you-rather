@@ -89,17 +89,18 @@ class App extends Component {
           {
             this.props.loading === true
               ? null
-              :
-              <Switch>
-                {/*<Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>*/}
+              : (
+                <Switch>
+                  {/*<Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>*/}
 
-                <Route exact path='/' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
-                <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
-                <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
-                <Route exact path={`/poll/results/${question.id}`}
-                       component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
-                <Route exact path='/create_question' component={() => <NewQuestionForm currentUser={currentUser}/>}/>
-              </Switch>
+                  <Route exact path='/' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
+                  <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
+                  <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
+                  <Route exact path={`/poll/results/${question.id}`}
+                         component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
+                  <Route exact path='/create_question' component={() => <NewQuestionForm currentUser={currentUser}/>}/>
+                </Switch>
+              )
           }
         </BrowserRouter>
       </div>
