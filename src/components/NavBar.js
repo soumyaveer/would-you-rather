@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Button } from "react-bootstrap";
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 class NavBar extends Component {
   state = {
@@ -43,24 +43,24 @@ class NavBar extends Component {
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-sm-auto">
+          <Nav className="nav-item mr-sm-auto">
             {
               userLoggedIn
-                ? <Nav.Link href={`/home`}> Home </Nav.Link>
-                : <Nav.Link href="/"> Home </Nav.Link>
+                ? <Link className='nav-link' href={`/home`}> Home </Link>
+                : <Link className='nav-link' href="/"> Home </Link>
             }
             {
               userLoggedIn
-                ? <Nav.Link href={`/create_question`}>New Question</Nav.Link>
-                : <Nav.Link href='/'>New Question</Nav.Link>
+                ? <Link className='nav-link' href={`/create_question`} onClick={this.handleClick}>New Question</Link>
+                : <Link className='nav-link' href='/'>New Question</Link>
             }
             {
               userLoggedIn
-                ? <Nav.Link href="/leaderboard">LeaderBoard</Nav.Link>
-                : <Nav.Link href="/">LeaderBoard</Nav.Link>
+                ? <Link className='nav-link' href="/leaderboard">LeaderBoard</Link>
+                : <Link className='nav-link' href="/">LeaderBoard</Link>
             }
             {
-              userLoggedIn && <Nav.Link inactive='true'>Hello, {currentUser.name}</Nav.Link>
+              userLoggedIn && <Link className='nav-link' inactive='true'>Hello, {currentUser.name}</Link>
             }
             {
               userLoggedIn && <Button variant="light" onClick={this.handleLogoutClick}>Log Out</Button>
