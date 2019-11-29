@@ -119,13 +119,13 @@ function generateUID () {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-export function getUsers () {
+export function _getUsers () {
   return new Promise((res, rej) => {
     setTimeout(() => res({...users}), 1000)
   })
 }
 
-export function getQuestions () {
+export function _getQuestions () {
   return new Promise((res, rej) => {
     setTimeout(() => res({...questions}), 1000)
   })
@@ -147,7 +147,7 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
   }
 }
 
-export function saveQuestion (question) {
+export function _saveQuestion (question) {
   return new Promise((res, rej) => {
     const authedUser = question.author;
     const formattedQuestion = formatQuestion(question);
@@ -156,7 +156,7 @@ export function saveQuestion (question) {
       questions = {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
-      }
+      };
 
       users = {
         ...users,
@@ -164,14 +164,14 @@ export function saveQuestion (question) {
           ...users[authedUser],
           questions: users[authedUser].questions.concat([formattedQuestion.id])
         }
-      }
+      };
 
       res(formattedQuestion)
     }, 1000)
   })
 }
 
-export function saveQuestionAnswer ({ authedUser, qid, answer }) {
+export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
   return new Promise((res, rej) => {
     setTimeout(() => {
       users = {

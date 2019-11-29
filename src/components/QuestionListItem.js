@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
-import { Card } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 class QuestionListItem extends Component {
 
   handleOnClick = (event) => {
-    console.log("Event", event.target);
-    console.log("Event", event.target.id);
     this.props.onPollSelect(event.target.id)
-  }
+  };
 
   render() {
-    const { question, currentUser, isQuestionAnswered } = this.props;
-    console.log("Question", question, currentUser);
+    const { question, author, isQuestionAnswered } = this.props;
     return (
       <div>
-        <Card bg="light" className="text-center">
+        <Card bg="light" className="text-center m-5">
           <Card.Header>
-            <h3>{question.author} asks</h3>
+            <h3>{author.name} asks</h3>
+            <Image src={author.avatarURL} roundedCircle/>
           </Card.Header>
 
           <Card.Body>
@@ -30,17 +29,17 @@ class QuestionListItem extends Component {
                 ? <Link to={`/poll/results/${question.id}`}
                         className='btn btn-outline-info'
                         id={question.id}
-                        onClick={this.handleOnClick}>View Poll</Link>
-                : <Link
-                  to={`/polls/${question.id}`}
-                  className='btn btn-outline-info'
-                  id={question.id}
-                  onClick={this.handleOnClick}
-                >
+                        onClick={this.handleOnClick}>
+                  View Poll
+                </Link>
+                :
+                <Link to={`/polls/${question.id}`}
+                      className='btn btn-outline-info'
+                      id={question.id}
+                      onClick={this.handleOnClick}>
                   View Poll
                 </Link>
             }
-
           </Card.Body>
         </Card>
       </div>
@@ -48,4 +47,14 @@ class QuestionListItem extends Component {
   }
 }
 
-export default QuestionListItem;
+const mapStateToProps = ({ authedUser, users, questions }, { question }) => {
+  const filteredQuestion = questions[question.id];
+  const authorId = filteredQuestion.author;
+  const author = users[authorId];
+  return {
+    author: author,
+    question: filteredQuestion
+  }
+};
+
+export default connect(mapStateToProps)(QuestionListItem);

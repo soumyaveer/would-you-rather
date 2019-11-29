@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import { setAuthedUser } from "../actions";
 
 class LogIn extends Component {
   state = {
@@ -15,15 +17,13 @@ class LogIn extends Component {
   updateCurrentUserState = (currentUser) => {
     this.setState({
       currentUser
-    }, () => console.log("State updated in the Login component for currentUser", this.state.currentUser))
+    })
   };
 
   handleOnClick = (event) => {
     event.preventDefault();
-
-    const userId = event.target.id
+    const userId = event.target.id;
     const currentUser = this.findUserById(userId);
-    console.log('Check what you recieve here?', currentUser)
     this.updateCurrentUserState(currentUser)
   };
 
@@ -33,13 +33,14 @@ class LogIn extends Component {
   }
 
   handleOnSubmitClick = () => {
-    this.props.onLogIn(this.state.currentUser)
+    const { dispatch } = this.props;
+    const { currentUser } = this.state;
+    dispatch(setAuthedUser(currentUser.id))
   };
 
   render() {
-    const { currentUser } = this.state;
     const { users } = this.props;
-    console.log('Am I going inside this component')
+    const { currentUser } = this.state;
     return (
       <Card bg="light" className="text-center">
 
@@ -86,4 +87,11 @@ class LogIn extends Component {
     )
   }
 }
-export default LogIn;
+
+const mapStateToProps = ({ users }) => {
+  return {
+    users: Object.values(users)
+  }
+}
+
+export default connect(mapStateToProps)(LogIn);

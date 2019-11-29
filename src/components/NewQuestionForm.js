@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Button, Card } from "react-bootstrap";
-import { saveQuestion } from "../store/DATA";
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { handleAddQuestion } from "../actions";
 
 class NewQuestionForm extends Component {
   state = {
     newQuestion: {
-      author: "sarahedo",
+      author: '',
       optionOneText: '',
       optionTwoText: ''
     }
@@ -14,29 +15,13 @@ class NewQuestionForm extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log("Values for new question", event.target)
     const question = this.state.newQuestion;
-    saveQuestion(question)
-      .then(response => console.log("Question Added?", response))
-      .then(() => this.props.history.push('/sarahedo/dashboard'))
-  };
-
-  componentDidMount() {
-    this.updateState()
-  }
-
-  updateState = () => {
-    console.log(this.props.currentUser)
-    this.setState({
-      newQuestion: {
-        ...this.state.newQuestion,
-        // TODO: Add author once login is sorted out.
-      }
-    }, () => console.log(this.state.newQuestion))
+    const {dispatch} = this.props;
+    dispatch(handleAddQuestion(question))
+      .then(() => this.props.history.push('/home'))
   };
 
   handleOptionOneChange = event => {
-    console.log('Option One value', event.target.value);
     this.setState({
       newQuestion: {
         ...this.state.newQuestion,
@@ -46,14 +31,13 @@ class NewQuestionForm extends Component {
   }
 
   handleOptionTwoChange = event => {
-    console.log('Option two value', event.target.value);
     this.setState({
       newQuestion: {
         ...this.state.newQuestion,
         optionTwoText: event.target.value
       }
     })
-  }
+  };
 
   render() {
     const { newQuestion } = this.state;
@@ -104,5 +88,5 @@ class NewQuestionForm extends Component {
   }
 }
 
-export default withRouter(NewQuestionForm);
+export default withRouter(connect()(NewQuestionForm));
 
