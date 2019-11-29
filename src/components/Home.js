@@ -22,16 +22,15 @@ class Home extends Component {
   }
 }
 
-
 const mapStateToProps = ({ questions, authedUser, users }) => {
   const questionsArray = Object.values(questions);
   const answeredQuestions = questionsArray.filter(question =>
     question.optionOne.votes.includes(authedUser) || question.optionTwo.votes.includes(authedUser)
-  );
+  ).sort((a, b) => b.timestamp - a.timestamp);
 
   const unansweredQuestions = questionsArray.filter(question =>
     !(question.optionOne.votes.includes(authedUser) || question.optionTwo.votes.includes(authedUser))
-  );
+  ).sort((a, b) => b.timestamp - a.timestamp);
 
   return {
     authedUser,
