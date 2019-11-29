@@ -25,7 +25,7 @@ class NavBar extends Component {
             }
             {
               !!authedUser
-                ? <Link className='nav-link' to='/create_question' onClick={this.handleClick}>New Question</Link>
+                ? <Link className='nav-link' to='/add' >New Question</Link>
                 : <Link className='nav-link' to='/'>New Question</Link>
             }
             {
@@ -37,7 +37,7 @@ class NavBar extends Component {
               !!authedUser && !!currentUser && <Link className='nav-link' to='#' inactive='true'>Hello, {currentUser.name}</Link>
             }
             {
-              !!authedUser && !!currentUser && <Button variant="light"  onClick={this.handleLogoutClick}>Log Out</Button>
+              !!authedUser && !!currentUser && <Button variant="light" onClick={this.handleLogoutClick}>Log Out</Button>
             }
           </Nav>
         </Navbar.Collapse>

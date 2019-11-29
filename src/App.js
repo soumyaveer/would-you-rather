@@ -11,6 +11,7 @@ import NewQuestionForm from "./components/NewQuestionForm";
 import { connect } from 'react-redux';
 import { handleInitialData } from "./actions/shared";
 import LoadingBar from 'react-redux-loading';
+import QuestionNotFound from "./components/QuestionNotFound";
 
 class App extends Component {
   state = {
@@ -37,23 +38,24 @@ class App extends Component {
             {
               this.props.loading === true
                 ? <div>
-                  <NavBar/>
-                  <Route exact path='/' component={() => <LogIn/>}/>
-                  </div>
+                  <NavBar />
+                  <Route render={() => (<LogIn />)}/>
+                </div>
                 : <div>
-                    <NavBar/>
-                    <Switch>
-                      <Route exact path='/' component={() => <LogIn/>}/>
-                      <Route exact path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
-                      <Route exact path={`/polls/${question.id}`}
+                  <NavBar/>
+                  <Switch>
+                    <Route exact path='/' component={() => <LogIn/>}/>
+                    <Route path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
+                    <Route path={`/questions/${question.id}`}
                            component={() => <PollListItemForm question={question}/>}/>
-                      <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
-                      <Route exact path={`/poll/results/${question.id}`}
+                    <Route path='/leaderboard' component={() => <LeaderBoard/>}/>
+                    <Route path={`/poll/results/${question.id}`}
                            component={() => <PollResults question={question}/>}/>
-                      <Route exact path='/create_question'
+                    <Route path='/add'
                            component={() => <NewQuestionForm/>}/>
-                    </Switch>
-                  </div>
+                    <Route path='/bad' component={() => <QuestionNotFound/>} />
+                  </Switch>
+                </div>
             }
           </div>
         </Fragment>
