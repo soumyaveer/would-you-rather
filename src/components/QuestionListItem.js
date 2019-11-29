@@ -6,14 +6,11 @@ import { connect } from 'react-redux';
 class QuestionListItem extends Component {
 
   handleOnClick = (event) => {
-    console.log("Event", event.target);
-    console.log("Event", event.target.id);
     this.props.onPollSelect(event.target.id)
-  }
+  };
 
   render() {
     const { question, author, isQuestionAnswered } = this.props;
-    console.log("Redux props for QuestionListItem", this.props)
     return (
       <div>
         <Card bg="light" className="text-center m-5">
@@ -32,13 +29,14 @@ class QuestionListItem extends Component {
                 ? <Link to={`/poll/results/${question.id}`}
                         className='btn btn-outline-info'
                         id={question.id}
-                        onClick={this.handleOnClick}>View Poll</Link>
-                : <Link
-                  to={`/polls/${question.id}`}
-                  className='btn btn-outline-info'
-                  id={question.id}
-                  onClick={this.handleOnClick}
-                >
+                        onClick={this.handleOnClick}>
+                  View Poll
+                </Link>
+                :
+                <Link to={`/polls/${question.id}`}
+                      className='btn btn-outline-info'
+                      id={question.id}
+                      onClick={this.handleOnClick}>
                   View Poll
                 </Link>
             }
@@ -49,14 +47,14 @@ class QuestionListItem extends Component {
   }
 }
 
-const mapStateToProps = ({authedUser, users, questions}, {question})  => {
-  const filteredQuestion = questions[question.id]
-  const authorId = filteredQuestion.author
-  const author = users[authorId]
+const mapStateToProps = ({ authedUser, users, questions }, { question }) => {
+  const filteredQuestion = questions[question.id];
+  const authorId = filteredQuestion.author;
+  const author = users[authorId];
   return {
     author: author,
     question: filteredQuestion
   }
-}
+};
 
 export default connect(mapStateToProps)(QuestionListItem);
