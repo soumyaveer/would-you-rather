@@ -37,23 +37,23 @@ class App extends Component {
             {
               this.props.loading === true
                 ? <div>
-                  <NavBar/>
-                  <Route exact path='/' component={() => <LogIn/>}/>
-                  </div>
+                <NavBar />
+                  <Route render={() => (<LogIn />)}/>
+                </div>
                 : <div>
-                    <NavBar/>
-                    <Switch>
-                      <Route exact path='/' component={() => <LogIn/>}/>
-                      <Route exact path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
-                      <Route exact path={`/polls/${question.id}`}
+                  <NavBar/>
+                  <Switch>
+                    <Route exact path='/' component={() => <LogIn/>}/>
+                    <Route path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
+                    <Route path={`/polls/${question.id}`}
                            component={() => <PollListItemForm question={question}/>}/>
-                      <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
-                      <Route exact path={`/poll/results/${question.id}`}
+                    <Route path='/leaderboard' component={() => <LeaderBoard/>}/>
+                    <Route path={`/poll/results/${question.id}`}
                            component={() => <PollResults question={question}/>}/>
-                      <Route exact path='/create_question'
+                    <Route path='/create_question'
                            component={() => <NewQuestionForm/>}/>
-                    </Switch>
-                  </div>
+                  </Switch>
+                </div>
             }
           </div>
         </Fragment>
