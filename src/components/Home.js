@@ -2,35 +2,34 @@ import React, { Component } from 'react';
 import QuestionsList from "./QuestionsList";
 import { connect } from 'react-redux';
 
-class Home extends Component {
-  handleOnPollSelect = (value) => {
+const Home = (props) => {
+  const handleOnPollSelect = (value) => {
     this.props.onPollSelect(value)
   }
 
-  render() {
-    const { unansweredQuestions, answeredQuestions, questions, authedUser } = this.props
-    return (
-      <QuestionsList
-        className='well text-center'
-        questions={questions}
-        unansweredQuestions={unansweredQuestions}
-        answeredQuestions={answeredQuestions}
-        currentUser={authedUser}
-        onPollSelect={this.handleOnPollSelect}
-      />
-    )
-  }
+  const { unansweredQuestions, answeredQuestions, questions, authedUser } = props;
+  return (
+    <QuestionsList
+      className='well text-center'
+      questions={questions}
+      unansweredQuestions={unansweredQuestions}
+      answeredQuestions={answeredQuestions}
+      currentUser={authedUser}
+      onPollSelect={handleOnPollSelect}
+    />
+  )
 }
 
 const mapStateToProps = ({ questions, authedUser, users }) => {
-  const questionsArray = Object.values(questions)
+  const questionsArray = Object.values(questions);
+
   const answeredQuestions = questionsArray.filter(question =>
     question.optionOne.votes.includes(authedUser) || question.optionTwo.votes.includes(authedUser)
-  )
+  );
 
   const unansweredQuestions = questionsArray.filter(question =>
-  !(question.optionOne.votes.includes(authedUser) || question.optionTwo.votes.includes(authedUser))
-  )
+    !(question.optionOne.votes.includes(authedUser) || question.optionTwo.votes.includes(authedUser))
+  );
 
   return {
     authedUser,
@@ -39,6 +38,6 @@ const mapStateToProps = ({ questions, authedUser, users }) => {
     answeredQuestions,
     unansweredQuestions
   }
-}
+};
 
 export default connect(mapStateToProps)(Home);
