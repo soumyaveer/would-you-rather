@@ -79,9 +79,7 @@ class App extends Component {
   };
 
   render() {
-    const { userLoggedIn, users, currentUser, question } = this.state;
-    const { authedUser } = this.props
-    console.log("Checking the App props here:", this.state)
+    const { users, currentUser, question } = this.state;
     return (
       <div>
         <BrowserRouter className="App">
@@ -100,7 +98,7 @@ class App extends Component {
                     <div>
                       <NavBar />
                       <Switch>
-                        <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn}/>}/>
+                        <Route exact path='/' component={() => <LogIn />}/>
 
                         <Route exact path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
                         <Route exact path={`/polls/${question.id}`}
@@ -123,9 +121,12 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ authedUser }) => {
+const mapStateToProps = ({ users, authedUser }) => {
+  const currentUser = users[authedUser]
   return {
-    loading: authedUser === null
+    loading: authedUser === null,
+    currentUser,
+    authedUser
   }
 }
 
