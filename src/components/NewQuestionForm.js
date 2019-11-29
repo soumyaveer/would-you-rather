@@ -15,7 +15,6 @@ class NewQuestionForm extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log("Values for new question", event.target)
     const question = this.state.newQuestion;
     const {dispatch} = this.props;
     dispatch(handleAddQuestion(question))
@@ -23,7 +22,6 @@ class NewQuestionForm extends Component {
   };
 
   handleOptionOneChange = event => {
-    console.log('Option One value', event.target.value);
     this.setState({
       newQuestion: {
         ...this.state.newQuestion,
@@ -33,14 +31,13 @@ class NewQuestionForm extends Component {
   }
 
   handleOptionTwoChange = event => {
-    console.log('Option two value', event.target.value);
     this.setState({
       newQuestion: {
         ...this.state.newQuestion,
         optionTwoText: event.target.value
       }
     })
-  }
+  };
 
   render() {
     const { newQuestion } = this.state;
