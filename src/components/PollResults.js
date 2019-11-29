@@ -5,13 +5,7 @@ import { connect } from 'react-redux';
 class PollResults extends Component {
   votesPercentage = (numberOfVotesForOption, totalVotes) => {
     return (numberOfVotesForOption / totalVotes) * 100
-  }
-
-  // findAuthorById = () => {
-  //   const {users, question} = this.props
-  //
-  //   return users.filter(user => user.id === question.author)[0]
-  // }
+  };
 
   render() {
     console.log("Checking the query params", this.props);
@@ -96,6 +90,5 @@ const mapStateToProps = ({authedUser, users, questions}, {question}) => {
     author: author
   }
 }
-
 
 export default connect(mapStateToProps)(PollResults);

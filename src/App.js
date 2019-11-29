@@ -105,8 +105,7 @@ class App extends Component {
                                component={() => <PollListItemForm question={question}/>}/>
                         <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
                         <Route exact path={`/poll/results/${question.id}`}
-                               component={() => <PollResults question={question} currentUser={currentUser}
-                                                             users={users}/>}/>
+                               component={() => <PollResults question={question}/>}/>
                         <Route exact path='/create_question'
                                component={() => <NewQuestionForm currentUser={currentUser}/>}/>
                       </Switch>
