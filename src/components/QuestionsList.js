@@ -26,26 +26,29 @@ class QuestionsList extends Component {
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
+                <h3>Your Unanswered Questions</h3>
                 {
-                  unansweredQuestions.map((question, id) => (
-                    <QuestionListItem
-                      question={question}
-                      key={id}
-                      onPollSelect={this.handlePollSelect}
-                      isQuestionAnswered={false}
-                      currentUser={currentUser}
-                    />
+                  unansweredQuestions.map((question) => (
+                      <QuestionListItem
+                        key={question.id}
+                        question={question}
+                        onPollSelect={this.handlePollSelect}
+                        isQuestionAnswered={false}
+                        currentUser={currentUser}
+                      />
                   ))
                 }
               </Card.Body>
             </Accordion.Collapse>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
+                <h3>Your Answered Questions</h3>
+
                 {
-                  answeredQuestions.map((question, id) => (
+                  answeredQuestions.map((question) => (
                     <QuestionListItem
                       question={question}
-                      key={id}
+                      key={question.id}
                       onPollSelect={this.handlePollSelect}
                       isQuestionAnswered={true}
                       currentUser={currentUser}
