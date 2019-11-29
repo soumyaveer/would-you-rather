@@ -1,3 +1,5 @@
+import { saveQuestionAnswer } from "../utils/api";
+
 export const loadUsers = (users) => {
   return {
     type: 'LOAD_USERS',
@@ -12,13 +14,28 @@ export const loadQuestions = (questions) => {
   }
 };
 
-export const answerQuestion = (question, answer) => {
+// Answer the poll questions and save the answer
+const answerQuestion = ({ authedUser, qid, answer }) => {
   return {
     type: 'ANSWER_QUESTION',
-    question,
+    qid,
+    authedUser,
     answer
   }
 };
+
+export const handleAnswerSave = (information) => {
+  return dispatch => {
+    dispatch(answerQuestion(information))
+
+    return saveQuestionAnswer(information)
+      .catch(error => {
+        console.warn('Error in handleAnswerSave:', error)
+        dispatch(answerQuestion(information))
+        alert('Error saving the answer for this question. Try again')
+      })
+  }
+}
 
 export const addQuestion = (question, questionId) => {
   return {
