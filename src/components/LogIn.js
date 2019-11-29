@@ -17,7 +17,7 @@ class LogIn extends Component {
   updateCurrentUserState = (currentUser) => {
     this.setState({
       currentUser
-    }, () => console.log("State updated in the Login component for currentUser", this.state.currentUser))
+    })
   };
 
   handleOnClick = (event) => {
@@ -43,7 +43,6 @@ class LogIn extends Component {
   render() {
     const { users } = this.props;
     const {currentUser} = this.state;
-    console.log('Am I going inside this component', currentUser)
     return (
       <Card bg="light" className="text-center">
 

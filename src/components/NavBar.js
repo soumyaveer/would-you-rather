@@ -14,8 +14,6 @@ class NavBar extends Component {
 
   render() {
     const { authedUser, currentUser } = this.props;
-    console.log("Is user logged in?", authedUser, currentUser);
-
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Collapse id="basic-navbar-nav">

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 class Home extends Component {
   handleOnPollSelect = (value) => {
-    console.log("Inside Home", value)
     this.props.onPollSelect(value)
   }
 

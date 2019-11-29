@@ -8,7 +8,6 @@ class PollResults extends Component {
   };
 
   render() {
-    console.log("Checking the query params", this.props);
     const { question, author, authedUser } = this.props;
     const optionOneVotesCount = question.optionOne.votes.length;
     const optionTwoVotesCount = question.optionTwo.votes.length;
