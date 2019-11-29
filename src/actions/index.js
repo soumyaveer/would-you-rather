@@ -87,11 +87,3 @@ export const setAuthedUser = (id) => {
     id
   }
 };
-
-//TODO: What should be the return value of this function. TBD
-export const logOutUser = (id) => {
-  return {
-    type: 'LOGOUT_USER',
-    id
-  }
-}
