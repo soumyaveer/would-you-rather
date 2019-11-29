@@ -38,7 +38,6 @@ class LogIn extends Component {
     const {dispatch} = this.props;
     const {currentUser} = this.state;
     dispatch(setAuthedUser(currentUser.id))
-    // this.props.onLogIn(this.state.currentUser)
   };
 
   render() {

@@ -24,48 +24,44 @@ class App extends Component {
     userLoggedIn: false,
     question: {}
   };
-
-  updateCurrentUserState = (newState) => {
-    this.setState({
-      currentUser: newState,
-      userLoggedIn: !this.state.userLoggedIn
-    })
-  }
-
-  handleLogIn = (values) => {
-    console.log('Raising the state up', values)
-    this.setState({
-      currentUser: values,
-      userLoggedIn: true
-    })
-  };
-
-  setLocalStorage = (key, value) => {
-    localStorage.setItem(key, value)
-  };
-
-  handleLogOut = (values) => {
-    console.log("Logging out here")
-    this.setState({
-      currentUser: {
-        id: '',
-        name: '',
-        avatarURL: '',
-        answers: {}
-      },
-      userLoggedIn: false
-    })
-  }
-
-  updateUsersState = (users) => {
-    this.setState({
-      users: users
-    }, () => console.log(this.state.users))
-  }
-
-  filterUsers = (response) => {
-    return Object.values(response)
-  };
+  //
+  // updateCurrentUserState = (newState) => {
+  //   this.setState({
+  //     currentUser: newState,
+  //     userLoggedIn: !this.state.userLoggedIn
+  //   })
+  // }
+  //
+  // handleLogIn = (values) => {
+  //   console.log('Raising the state up', values)
+  //   this.setState({
+  //     currentUser: values,
+  //     userLoggedIn: true
+  //   })
+  // };
+  //
+  // handleLogOut = (values) => {
+  //   console.log("Logging out here")
+  //   this.setState({
+  //     currentUser: {
+  //       id: '',
+  //       name: '',
+  //       avatarURL: '',
+  //       answers: {}
+  //     },
+  //     userLoggedIn: false
+  //   })
+  // }
+  //
+  // updateUsersState = (users) => {
+  //   this.setState({
+  //     users: users
+  //   }, () => console.log(this.state.users))
+  // }
+  //
+  // filterUsers = (response) => {
+  //   return Object.values(response)
+  // };
 
   componentDidMount() {
     this.props.dispatch(handleInitialData())
@@ -79,7 +75,7 @@ class App extends Component {
   };
 
   render() {
-    const { users, currentUser, question } = this.state;
+    const {question } = this.state;
     return (
       <div>
         <BrowserRouter className="App">
@@ -91,7 +87,7 @@ class App extends Component {
                   ? (
                     <div>
                       <NavBar />
-                      <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn}/>}/>
+                      <Route exact path='/' component={() => <LogIn />}/>
                     </div>
                   )
                   : (
