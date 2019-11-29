@@ -45,7 +45,7 @@ class App extends Component {
                   <Switch>
                     <Route exact path='/' component={() => <LogIn/>}/>
                     <Route path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
-                    <Route path={`/polls/${question.id}`}
+                    <Route path={`/questions/${question.id}`}
                            component={() => <PollListItemForm question={question}/>}/>
                     <Route path='/leaderboard' component={() => <LeaderBoard/>}/>
                     <Route path={`/poll/results/${question.id}`}

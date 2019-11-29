@@ -33,7 +33,7 @@ class QuestionListItem extends Component {
                   View Poll
                 </Link>
                 :
-                <Link to={`/polls/${question.id}`}
+                <Link to={`/questions/${question.id}`}
                       className='btn btn-outline-info'
                       id={question.id}
                       onClick={this.handleOnClick}>
