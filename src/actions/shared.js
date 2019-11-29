@@ -1,4 +1,4 @@
-import { loadQuestions, loadUsers, loginUser } from "./index";
+import { loadQuestions, loadUsers, setAuthedUser } from "./index";
 import { getInitialData } from "../utils/api";
 import { showLoading, hideLoading } from 'react-redux-loading';
 
@@ -11,7 +11,7 @@ export const handleInitialData = () => {
       .then(({ users, questions }) => {
         dispatch(loadUsers(users))
         dispatch(loadQuestions(questions))
-        dispatch(loginUser(AUTHED_ID))
+        dispatch(setAuthedUser(AUTHED_ID))
         dispatch(hideLoading())
       })
   }

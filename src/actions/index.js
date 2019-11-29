@@ -81,9 +81,9 @@ export const handleAddQuestion = ({ optionOneText, optionTwoText, author }) => {
   }
 }
 
-export const loginUser = (id) => {
+export const setAuthedUser = (id) => {
   return {
-    type: 'LOGIN_USER',
+    type: 'SET_AUTHED_USER',
     id
   }
 };
