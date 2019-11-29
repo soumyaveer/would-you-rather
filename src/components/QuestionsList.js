@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from "react-bootstrap";
 import QuestionListItem from "./QuestionListItem";
-import PollResults from "./PollResults";
 
 class QuestionsList extends Component {
   handlePollSelect = (value) => {
@@ -36,7 +35,7 @@ class QuestionsList extends Component {
                       key={id}
                       onPollSelect={this.handlePollSelect}
                       isQuestionAnswered={false}
-                      currentUser={this.props.currentUser}
+                      currentUser={currentUser}
                     />
                   ))
                 }

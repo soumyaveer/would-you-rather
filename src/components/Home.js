@@ -26,7 +26,6 @@ class Home extends Component {
 
   filterUnansweredQuestions = (questions) => {
     const user = this.filterCurrentUserData()
-
     console.log(user.answers)
     let unAnsweredQuestions = [];
 
@@ -35,8 +34,6 @@ class Home extends Component {
         answerId !== question.id && unAnsweredQuestions.push(question)
       )
     }
-
-
     console.log("These questions are not answered", unAnsweredQuestions)
     return unAnsweredQuestions;
   }
@@ -52,7 +49,6 @@ class Home extends Component {
 
   extractQuestions = (response) => {
     return  Object.values(response)
-
   }
 
   updateState = (questions) => {

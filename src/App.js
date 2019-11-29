@@ -14,8 +14,10 @@ import NewQuestionForm from "./components/NewQuestionForm";
 class App extends Component {
   state = {
     currentUser: {
+      id: '',
       name: '',
-      id: ''
+      avatarURL: '',
+      answers: {}
     },
     users: [],
     userLoggedIn: false,
@@ -31,7 +33,27 @@ class App extends Component {
 
   handleLogIn = (values) => {
     console.log('Raising the state up', values)
-    this.updateCurrentUserState(values)
+    this.setState({
+      currentUser: values,
+      userLoggedIn: true
+    })
+  };
+
+  setLocalStorage = (key, value) => {
+    localStorage.setItem(key, value)
+  };
+
+  handleLogOut = (values) => {
+    console.log("Logging out here")
+    this.setState({
+      currentUser: {
+        id: '',
+        name: '',
+        avatarURL: '',
+        answers: {}
+      },
+      userLoggedIn: false
+    })
   }
 
   updateUsersState = (users) => {
@@ -41,11 +63,7 @@ class App extends Component {
   }
 
   filterUsers = (response) => {
-    let users = [];
-    for (const user in response) {
-      users.push(response[user])
-    }
-    return users
+    return Object.values(response)
   };
 
   componentDidMount() {
@@ -59,25 +77,25 @@ class App extends Component {
     this.setState({
       question: question
     }, () => console.log("Question state", this.state))
-  }
+  };
 
   render() {
     const { userLoggedIn, users, currentUser, question } = this.state;
     console.log(userLoggedIn)
     return (
       <div>
-        <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn}/>
         <BrowserRouter className="App">
+          <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
           <Switch>
             <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route exact path={`/${currentUser.id}/dashboard`}
+            <Route path={`/home`}
                    component={() => <Home currentUser={currentUser} users={users}
                                           onPollSelect={this.handleOnPollSelect}/>}/>
             <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
             <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
             <Route exact path={`/poll/results/${question.id}`}
-                   component={() => <PollResults question={question} currentUser={currentUser}/>}/>
-            <Route exact path='/create_question' component={() => <NewQuestionForm currentUser={currentUser}/>}/>
+                   component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
+            <Route path={'/create_question'} component={() => <NewQuestionForm currentUser={currentUser}/>}/>
           </Switch>
         </BrowserRouter>
       </div>

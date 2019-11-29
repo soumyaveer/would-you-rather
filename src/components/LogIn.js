@@ -5,34 +5,41 @@ import { Link } from "react-router-dom";
 class LogIn extends Component {
   state = {
     currentUser: {
+      id: '',
       name: 'Select User',
-      id: ''
+      avatarURL: '',
+      answers: {}
     }
   };
 
   updateCurrentUserState = (currentUser) => {
     this.setState({
       currentUser
-    })
-  }
+    }, () => console.log("State updated in the Login component for currentUser", this.state.currentUser))
+  };
 
   handleOnClick = (event) => {
     event.preventDefault();
-    const currentUser = {
-      name: event.target.textContent,
-      id: event.target.id
-    };
+
+    const userId = event.target.id
+    const currentUser = this.findUserById(userId);
+    console.log('Check what you recieve here?', currentUser)
     this.updateCurrentUserState(currentUser)
   };
+
+  findUserById = userId => {
+    const { users } = this.props;
+    return users.filter(user => user.id === userId)[0]
+  }
 
   handleOnSubmitClick = () => {
     this.props.onLogIn(this.state.currentUser)
   };
 
   render() {
-    const {currentUser} = this.state;
-    const {users} = this.props;
-
+    const { currentUser } = this.state;
+    const { users } = this.props;
+    console.log('Am I going inside this component')
     return (
       <Card bg="light" className="text-center">
 
@@ -67,7 +74,7 @@ class LogIn extends Component {
           </Dropdown>
 
           <Link
-            to={`${currentUser.id}/dashboard`}
+            to={`/home`}
             className='btn btn-info'
             onClick={this.handleOnSubmitClick}
           >
@@ -79,5 +86,4 @@ class LogIn extends Component {
     )
   }
 }
-
 export default LogIn;
