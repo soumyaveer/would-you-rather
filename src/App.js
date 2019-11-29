@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 import NavBar from "./components/NavBar";
 import LogIn from "./components/LogIn";
 import Home from "./components/Home";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { _getUsers } from "./utils/_DATA";
 import PollListItemForm from "./components/PollListItemForm";
 import LeaderBoard from "./components/LeaderBoard";
 import PollResults from "./components/PollResults";
 import NewQuestionForm from "./components/NewQuestionForm";
+import { connect } from 'react-redux';
+import { handleInitialData } from "./actions/shared";
+import LoadingBar from 'react-redux-loading';
 
 class App extends Component {
   state = {
@@ -67,9 +68,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    _getUsers()
-      .then(response => this.filterUsers(response))
-      .then(users => this.updateUsersState(users))
+    this.props.dispatch(handleInitialData())
   }
 
   handleOnPollSelect = (question) => {
@@ -81,27 +80,37 @@ class App extends Component {
 
   render() {
     const { userLoggedIn, users, currentUser, question } = this.state;
-    console.log(userLoggedIn)
+    console.log("Checking the App props here:", this.state)
     return (
       <div>
+        <LoadingBar />
         <BrowserRouter className="App">
           <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
-          <Switch>
-            <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>
-            <Route path={`/home`}
-                   component={() => <Home currentUser={currentUser} users={users}
-                                          onPollSelect={this.handleOnPollSelect}/>}/>
-            <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
-            <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
-            <Route exact path={`/poll/results/${question.id}`}
-                   component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
-            <Route path={'/create_question'} component={() => <NewQuestionForm currentUser={currentUser}/>}/>
-          </Switch>
+          {
+            this.props.loading === true
+              ? null
+              :
+              <Switch>
+                {/*<Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>*/}
+
+                <Route exact path='/' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
+                <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
+                <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
+                <Route exact path={`/poll/results/${question.id}`}
+                       component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
+                <Route exact path='/create_question' component={() => <NewQuestionForm currentUser={currentUser}/>}/>
+              </Switch>
+          }
         </BrowserRouter>
       </div>
     )
   }
-
 }
 
-export default App;
+const mapStateToProps = ({ authedUser }) => {
+  return {
+    loading: authedUser === null
+  }
+}
+
+export default connect(mapStateToProps)(App);

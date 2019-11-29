@@ -50,7 +50,7 @@ class QuestionsList extends Component {
                       key={id}
                       onPollSelect={this.handlePollSelect}
                       isQuestionAnswered={true}
-                      currentUser={this.props.currentUser}
+                      currentUser={currentUser}
                     />
                   ))
                 }

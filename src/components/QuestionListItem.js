@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Card } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 class QuestionListItem extends Component {
 
@@ -11,13 +12,14 @@ class QuestionListItem extends Component {
   }
 
   render() {
-    const { question, currentUser, isQuestionAnswered } = this.props;
-    console.log("Question", question, currentUser);
+    const { question, author, isQuestionAnswered } = this.props;
+    console.log("Redux props for QuestionListItem", this.props)
     return (
       <div>
-        <Card bg="light" className="text-center">
+        <Card bg="light" className="text-center m-5">
           <Card.Header>
-            <h3>{question.author} asks</h3>
+            <h3>{author.name} asks</h3>
+            <Image src={author.avatarURL} roundedCircle/>
           </Card.Header>
 
           <Card.Body>
@@ -40,7 +42,6 @@ class QuestionListItem extends Component {
                   View Poll
                 </Link>
             }
-
           </Card.Body>
         </Card>
       </div>
@@ -48,4 +49,14 @@ class QuestionListItem extends Component {
   }
 }
 
-export default QuestionListItem;
+const mapStateToProps = ({authedUser, users, questions}, {question})  => {
+  const filteredQuestion = questions[question.id]
+  const authorId = filteredQuestion.author
+  const author = users[authorId]
+  return {
+    author: author,
+    question: filteredQuestion
+  }
+}
+
+export default connect(mapStateToProps)(QuestionListItem);

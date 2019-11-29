@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { _getQuestions } from "../utils/_DATA";
 import QuestionsList from "./QuestionsList";
+import { connect } from 'react-redux';
 
 class Home extends Component {
   state = {
@@ -39,16 +39,12 @@ class Home extends Component {
   }
 
   filterCurrentUserData = () => {
-    const { users, currentUser } = this.props
+    const { users, authedUser } = this.props
     const userDetails = users.filter(user =>
-      user.id === currentUser.id
+      user.id === authedUser
     )
     console.log("Filetring users details", userDetails)
     return userDetails[0]
-  }
-
-  extractQuestions = (response) => {
-    return  Object.values(response)
   }
 
   updateState = (questions) => {
@@ -73,29 +69,31 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    _getQuestions()
-      .then(response => {
-        console.log(response)
-        return this.extractQuestions(response)
-      })
-      .then(questions => this.updateState(questions))
-      .catch(err => console.log(err))
+    this.updateState(this.props.questions)
   }
 
   render() {
     console.log("Props to home", this.props)
-    const {unansweredQuestions, answeredQuestions} = this.state.user
+    const { unansweredQuestions, answeredQuestions } = this.state.user
     return (
       <QuestionsList
         className='well text-center'
-        questions={this.state.questions}
+        questions={this.props.questions}
         unansweredQuestions={unansweredQuestions}
         answeredQuestions={answeredQuestions}
-        currentUser={this.props.currentUser}
+        currentUser={this.props.authedUser}
         onPollSelect={this.handleOnPollSelect}
       />
     )
   }
 }
 
-export default Home;
+const mapStateToProps = ({ questions, authedUser, users }) => {
+  return {
+    authedUser,
+    users: Object.values(users),
+    questions: Object.values(questions)
+  }
+}
+
+export default connect(mapStateToProps)(Home);
