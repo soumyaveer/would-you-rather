@@ -5,14 +5,12 @@ import QuestionListItem from "./QuestionListItem";
 class QuestionsList extends Component {
   handlePollSelect = (value) => {
     const question = this.findQuestion(value);
-    console.log(question)
     this.props.onPollSelect(question)
-  }
+  };
 
   findQuestion = (searchQuestionId) => {
-    console.log(this.props.questions);
     return this.props.questions.filter(question => searchQuestionId === question.id)[0]
-  }
+  };
 
   render() {
     const { unansweredQuestions, answeredQuestions, currentUser } = this.props
