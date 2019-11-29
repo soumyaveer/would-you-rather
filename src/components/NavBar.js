@@ -25,7 +25,7 @@ class NavBar extends Component {
             }
             {
               !!authedUser
-                ? <Link className='nav-link' to='/create_question' >New Question</Link>
+                ? <Link className='nav-link' to='/add' >New Question</Link>
                 : <Link className='nav-link' to='/'>New Question</Link>
             }
             {

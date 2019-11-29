@@ -11,6 +11,7 @@ import NewQuestionForm from "./components/NewQuestionForm";
 import { connect } from 'react-redux';
 import { handleInitialData } from "./actions/shared";
 import LoadingBar from 'react-redux-loading';
+import QuestionNotFound from "./components/QuestionNotFound";
 
 class App extends Component {
   state = {
@@ -37,7 +38,7 @@ class App extends Component {
             {
               this.props.loading === true
                 ? <div>
-                <NavBar />
+                  <NavBar />
                   <Route render={() => (<LogIn />)}/>
                 </div>
                 : <div>
@@ -50,8 +51,9 @@ class App extends Component {
                     <Route path='/leaderboard' component={() => <LeaderBoard/>}/>
                     <Route path={`/poll/results/${question.id}`}
                            component={() => <PollResults question={question}/>}/>
-                    <Route path='/create_question'
+                    <Route path='/add'
                            component={() => <NewQuestionForm/>}/>
+                    <Route path='/bad' component={() => <QuestionNotFound/>} />
                   </Switch>
                 </div>
             }
