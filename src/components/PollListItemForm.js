@@ -18,7 +18,6 @@ class PollListItemForm extends Component {
   }
 
   handleRadioButtonSelectionChange = (event) => {
-    console.log(event.target.value);
     const selectedOption = event.target.value;
     this.setState({
       selectedOption
@@ -33,12 +32,11 @@ class PollListItemForm extends Component {
       answer: this.state.selectedOption,
       authedUser
     }))
-      .then(this.props.history.push(`/poll/results/${question.id}`))
+      .then(() => this.props.history.push(`/poll/results/${question.id}`))
   }
 
   render() {
     const { question } = this.props;
-    console.log("This is what I am receiving", this.props)
     return (
       <form className='form-group' onSubmit={this.handleFormSubmit}>
         <Card bg="light" className="text-center">
@@ -89,6 +87,5 @@ const mapStateToProps = ({ authedUser, users, questions }, { question }) => {
     question: filteredQuestion
   }
 }
-
 
 export default withRouter(connect(mapStateToProps)(PollListItemForm));
