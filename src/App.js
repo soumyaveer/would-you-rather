@@ -80,24 +80,27 @@ class App extends Component {
 
   render() {
     const { userLoggedIn, users, currentUser, question } = this.state;
+    const { authedUser } = this.props
     console.log("Checking the App props here:", this.state)
     return (
       <div>
         <BrowserRouter className="App">
           <Fragment>
             <LoadingBar/>
-
-            <div className='container'>
+            <div className='container' style={{marginTop: 20}}>
               {
                 this.props.loading === true
-                  ? null
+                  ? (
+                    <div>
+                      <NavBar />
+                      <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn}/>}/>
+                    </div>
+                  )
                   : (
                     <div>
-
-                      <NavBar onLogoutButtonClick={this.handleLogOut}/>
+                      <NavBar />
                       <Switch>
-
-                        {/*<Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>*/}
+                        <Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn}/>}/>
 
                         <Route exact path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
                         <Route exact path={`/polls/${question.id}`}
@@ -122,8 +125,7 @@ class App extends Component {
 
 const mapStateToProps = ({ authedUser }) => {
   return {
-    loading: authedUser === null,
-    authedUser
+    loading: authedUser === null
   }
 }
 

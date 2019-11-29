@@ -60,7 +60,7 @@ class NavBar extends Component {
               !!authedUser && !!currentUser && <Link className='nav-link' inactive='true'>Hello, {currentUser.name}</Link>
             }
             {
-              !!authedUser && !!currentUser && <Button variant="light" onClick={this.handleLogoutClick}>Log Out</Button>
+              !!authedUser && !!currentUser && <Button variant="light"  onClick={this.handleLogoutClick}>Log Out</Button>
             }
           </Nav>
         </Navbar.Collapse>

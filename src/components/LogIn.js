@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import { setAuthedUser } from "../actions";
 
 class LogIn extends Component {
   state = {
@@ -33,13 +35,16 @@ class LogIn extends Component {
   }
 
   handleOnSubmitClick = () => {
-    this.props.onLogIn(this.state.currentUser)
+    const {dispatch} = this.props;
+    const {currentUser} = this.state;
+    dispatch(setAuthedUser(currentUser.id))
+    // this.props.onLogIn(this.state.currentUser)
   };
 
   render() {
-    const { currentUser } = this.state;
     const { users } = this.props;
-    console.log('Am I going inside this component')
+    const {currentUser} = this.state;
+    console.log('Am I going inside this component', currentUser)
     return (
       <Card bg="light" className="text-center">
 
@@ -86,4 +91,11 @@ class LogIn extends Component {
     )
   }
 }
-export default LogIn;
+
+const mapStateToProps = ({ users }) => {
+  return {
+    users: Object.values(users)
+  }
+}
+
+export default connect(mapStateToProps)(LogIn);
