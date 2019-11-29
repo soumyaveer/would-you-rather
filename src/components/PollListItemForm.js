@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Image } from "react-bootstrap";
 import { handleAnswerSave } from "../actions";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -36,36 +36,41 @@ class PollListItemForm extends Component {
   }
 
   render() {
-    const { question } = this.props;
+    const { question, author } = this.props;
     return (
       <form className='form-group' onSubmit={this.handleFormSubmit}>
         <Card bg="light" className="text-center">
           <Card.Header>
-            <h5>{question.author} asks</h5>
+            <h5>{author.name} asks</h5>
+            <Image src={author.avatarURL} roundedCircle/>
           </Card.Header>
           <Card.Body>
             <h3>Would you Rather ...</h3>
 
             <div className='Radio'>
-              <label>
-                <input
-                  type="radio"
-                  name="answer"
-                  value="optionOne"
-                  checked={this.state.selectedOption === 'optionOne'}
-                  onChange={this.handleRadioButtonSelectionChange}/>
+              <input
+                className='mr-1'
+                type="radio"
+                name="answer"
+                value="optionOne"
+                checked={this.state.selectedOption === 'optionOne'}
+                onChange={this.handleRadioButtonSelectionChange}/>
+
+              <label className='m-1'>
                 {question.optionOne.text}
               </label>
             </div>
 
             <div className='Radio'>
-              <label>
-                <input
-                  type="radio"
-                  name="answer"
-                  value="optionTwo"
-                  checked={this.state.selectedOption === 'optionTwo'}
-                  onChange={this.handleRadioButtonSelectionChange}/>
+              <input
+                className='mr-1'
+                type="radio"
+                name="answer"
+                value="optionTwo"
+                checked={this.state.selectedOption === 'optionTwo'}
+                onChange={this.handleRadioButtonSelectionChange}/>
+
+              <label className='m-1'>
                 {question.optionTwo.text}
               </label>
             </div>
@@ -82,9 +87,11 @@ class PollListItemForm extends Component {
 
 const mapStateToProps = ({ authedUser, users, questions }, { question }) => {
   const filteredQuestion = questions[question.id]
+  const author = users[question.author]
   return {
     authedUser,
-    question: filteredQuestion
+    question: filteredQuestion,
+    author
   }
 }
 
