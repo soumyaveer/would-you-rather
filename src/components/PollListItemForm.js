@@ -6,16 +6,8 @@ import { withRouter } from 'react-router-dom';
 
 class PollListItemForm extends Component {
   state = {
-    question: {},
     selectedOption: ''
   };
-
-  componentDidMount() {
-    const { question } = this.props;
-    this.setState({
-      question
-    })
-  }
 
   handleRadioButtonSelectionChange = (event) => {
     const selectedOption = event.target.value;
