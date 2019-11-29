@@ -1,4 +1,5 @@
-import { saveQuestionAnswer } from "../utils/api";
+import { saveQuestionAnswer, saveQuestion } from "../utils/api";
+import { showLoading, hideLoading } from "react-redux-loading";
 
 export const loadUsers = (users) => {
   return {
@@ -14,7 +15,7 @@ export const loadQuestions = (questions) => {
   }
 };
 
-// Adds
+// Adds answer selected by the user for the poll question
 const answerQuestion = ({ authedUser, qid, answer }) => {
   return {
     type: 'ANSWER_QUESTION',
@@ -46,13 +47,39 @@ export const handleAnswerSave = (data) => {
   }
 };
 
-export const addQuestion = (question, questionId) => {
+// Adds a new question
+const addQuestion = (question) => {
   return {
     type: 'ADD_QUESTION',
-    id: questionId,
     question
   }
 };
+
+const addQuestionToAuthorList = ({id, author}) => {
+  return {
+    type: 'ADD_QUESTION_TO_AUTHOR_LIST',
+    id,
+    author
+  }
+}
+
+export const handleAddQuestion = ({ optionOneText, optionTwoText, author }) => {
+  return (dispatch) => {
+
+    dispatch(showLoading())
+
+    return saveQuestion({
+      optionOneText,
+      optionTwoText,
+      author
+    })
+      .then((question) => {
+        dispatch(addQuestion(question))
+        dispatch(addQuestionToAuthorList(question))
+      })
+      .then(() => dispatch(hideLoading()))
+  }
+}
 
 export const loginUser = (id) => {
   return {
