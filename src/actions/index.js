@@ -14,8 +14,8 @@ export const loadQuestions = (questions) => {
   }
 };
 
-// Answer the poll questions and save the answer
-const answerQuestion = ({ authedUser, qid, answer }) => {
+// Adds
+const answerQuestion = ( authedUser, qid, answer ) => {
   return {
     type: 'ANSWER_QUESTION',
     qid,
@@ -24,10 +24,19 @@ const answerQuestion = ({ authedUser, qid, answer }) => {
   }
 };
 
+const addAnswerToUserAnswers = (authedUser, qid, answer) => {
+  return {
+    type: 'ADD_ANSWER_TO_USER_ANSWERS',
+    authedUser,
+    qid,
+    answer
+  }
+}
+
 export const handleAnswerSave = (information) => {
   return dispatch => {
     dispatch(answerQuestion(information))
-
+    dispatch(addAnswerToUserAnswers(information))
     return saveQuestionAnswer(information)
       .catch(error => {
         console.warn('Error in handleAnswerSave:', error)

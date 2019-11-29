@@ -1,4 +1,4 @@
-const questions = (state=[], action) =>{
+const questions = (state={}, action) =>{
   switch(action.type) {
     case 'LOAD_QUESTIONS':
       return {
@@ -6,10 +6,17 @@ const questions = (state=[], action) =>{
         ...action.questions
       }
     case 'ANSWER_QUESTION':
-      return[
+      const {answer, qid, authedUser} = action
+      return {
         ...state,
-        //TODO: filter the question and merge the selected answer to it.
-      ]
+        [qid]: {
+          ...state[qid],
+          [answer]: {
+            ...state[qid][answer],
+            votes: state[qid][answer].votes.concat([authedUser])
+          }
+        }
+      }
     case 'ADD_QUESTION':
       return [
         ...state,
