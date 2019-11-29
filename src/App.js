@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./components/NavBar";
 import LogIn from "./components/LogIn";
@@ -83,25 +83,37 @@ class App extends Component {
     console.log("Checking the App props here:", this.state)
     return (
       <div>
-        <LoadingBar/>
         <BrowserRouter className="App">
-          <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
-          {
-            this.props.loading === true
-              ? null
-              : (
-                <Switch>
-                  {/*<Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>*/}
+          <Fragment>
+            <LoadingBar/>
 
-                  <Route exact path='/' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
-                  <Route exact path={`/polls/${question.id}`} component={() => <PollListItemForm question={question}/>}/>
-                  <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
-                  <Route exact path={`/poll/results/${question.id}`}
-                         component={() => <PollResults question={question} currentUser={currentUser} users={users}/>}/>
-                  <Route exact path='/create_question' component={() => <NewQuestionForm currentUser={currentUser}/>}/>
-                </Switch>
-              )
-          }
+            <div className='container'>
+              {
+                this.props.loading === true
+                  ? null
+                  : (
+                    <div>
+
+                      <NavBar onLogoutButtonClick={this.handleLogOut}/>
+                      <Switch>
+
+                        {/*<Route exact path='/' component={() => <LogIn onLogIn={this.handleLogIn} users={users}/>}/>*/}
+
+                        <Route exact path='/home' component={() => <Home onPollSelect={this.handleOnPollSelect}/>}/>
+                        <Route exact path={`/polls/${question.id}`}
+                               component={() => <PollListItemForm question={question}/>}/>
+                        <Route exact path='/leaderboard' component={() => <LeaderBoard/>}/>
+                        <Route exact path={`/poll/results/${question.id}`}
+                               component={() => <PollResults question={question} currentUser={currentUser}
+                                                             users={users}/>}/>
+                        <Route exact path='/create_question'
+                               component={() => <NewQuestionForm currentUser={currentUser}/>}/>
+                      </Switch>
+                    </div>
+                  )
+              }
+            </div>
+          </Fragment>
         </BrowserRouter>
       </div>
     )
@@ -110,7 +122,8 @@ class App extends Component {
 
 const mapStateToProps = ({ authedUser }) => {
   return {
-    loading: authedUser === null
+    loading: authedUser === null,
+    authedUser
   }
 }
 

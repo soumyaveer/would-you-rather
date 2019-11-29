@@ -19,7 +19,7 @@ class NewQuestionForm extends Component {
     const question = this.state.newQuestion;
     const {dispatch} = this.props;
     dispatch(handleAddQuestion(question))
-      .then(() => this.props.history.push('/sarahedo/home'))
+      .then(() => this.props.history.push('/home'))
   };
 
   handleOptionOneChange = event => {
