@@ -58,7 +58,7 @@ const addQuestion = (question) => {
 const addQuestionToAuthorList = ({id, author}) => {
   return {
     type: 'ADD_QUESTION_TO_AUTHOR_LIST',
-    id,
+    qid,
     author
   }
 }

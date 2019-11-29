@@ -17,6 +17,15 @@ const users = (state = {}, action) => {
           }
         }
       }
+    case 'ADD_QUESTION_TO_AUTHOR_LIST':
+      const {id, author} = action;
+      return {
+        ...state,
+        [author]: {
+          ...state[author],
+          questions: state[author].questions.concat([qid])
+        }
+      }
     default:
       return state
   }

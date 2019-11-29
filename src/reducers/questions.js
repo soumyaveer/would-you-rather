@@ -18,10 +18,11 @@ const questions = (state={}, action) =>{
         }
       }
     case 'ADD_QUESTION':
-      return [
+      const {question} = action;
+      return {
         ...state,
-        //TODO: Concat the new question to the list of questions
-      ]
+        [question.id]: question
+      }
     default:
       return state
   }
