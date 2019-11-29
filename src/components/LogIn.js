@@ -22,10 +22,8 @@ class LogIn extends Component {
 
   handleOnClick = (event) => {
     event.preventDefault();
-
-    const userId = event.target.id
+    const userId = event.target.id;
     const currentUser = this.findUserById(userId);
-    console.log('Check what you recieve here?', currentUser)
     this.updateCurrentUserState(currentUser)
   };
 
@@ -35,14 +33,14 @@ class LogIn extends Component {
   }
 
   handleOnSubmitClick = () => {
-    const {dispatch} = this.props;
-    const {currentUser} = this.state;
+    const { dispatch } = this.props;
+    const { currentUser } = this.state;
     dispatch(setAuthedUser(currentUser.id))
   };
 
   render() {
     const { users } = this.props;
-    const {currentUser} = this.state;
+    const { currentUser } = this.state;
     return (
       <Card bg="light" className="text-center">
 
