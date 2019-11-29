@@ -83,7 +83,7 @@ class App extends Component {
     console.log("Checking the App props here:", this.state)
     return (
       <div>
-        <LoadingBar />
+        <LoadingBar/>
         <BrowserRouter className="App">
           <NavBar currentUser={currentUser} userLoggedIn={userLoggedIn} onLogoutButtonClick={this.handleLogOut}/>
           {
